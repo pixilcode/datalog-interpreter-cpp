@@ -19,7 +19,7 @@ enum class TokenType {
     ID,
     STRING,
     COMMENT,
-    EOF,
+    END_OF_FILE,
     UNDEFINED
 };
 
