@@ -6,9 +6,7 @@
 class ColonAutomaton : public Automaton
 {
 public:
-    ColonAutomaton() : Automaton(TokenType::COLON) {}  // Call the base constructor
-
-    void S0(const std::string& input);
+    AutomatonResult s0(const std::string &input, int currIndex, int currLine);
 };
 
 #endif // COLONAUTOMATON_H
