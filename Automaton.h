@@ -13,22 +13,20 @@ struct AutomatonSuccess {
     int finalLine;
 
     AutomatonSuccess(Token token, int finalIndex, int finalLine):
-            token(std::move(token)),
+            token(move(token)),
             finalIndex(finalIndex),
             finalLine(finalLine) {}
 };
 
 typedef optional<AutomatonSuccess> AutomatonResult;
 
-class Automaton
-{
+class Automaton {
 public:
-    AutomatonResult start(const std::string& input, int currIndex, int currLine) {
+    AutomatonResult start(const string& input, int currIndex, int currLine) {
         return s0(input, currIndex, currLine);
     }
 
-    // Every subclass must define this method
-    virtual AutomatonResult s0(const std::string& input, int currIndex, int currLine) = 0;
+    virtual AutomatonResult s0(const string& input, int currIndex, int currLine) = 0;
 
     AutomatonResult sErr() {
         return nullopt;
