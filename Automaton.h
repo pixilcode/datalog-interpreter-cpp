@@ -1,44 +1,38 @@
 #ifndef AUTOMATON_H
 #define AUTOMATON_H
+#include <optional>
+#include <tuple>
+#include <utility>
 #include "Token.h"
+
+using namespace std;
+
+struct AutomatonSuccess {
+    Token token;
+    int finalIndex;
+    int finalLine;
+
+    AutomatonSuccess(Token token, int finalIndex, int finalLine):
+            token(std::move(token)),
+            finalIndex(finalIndex),
+            finalLine(finalLine) {}
+};
+
+typedef optional<AutomatonSuccess> AutomatonResult;
 
 class Automaton
 {
-protected:
-    int inputRead = 0;
-    int newLines = 0;
-    int index = 0;
-    TokenType type;
-
 public:
-    // Default constructor -- since we have a constructor that takes a parameter,
-    //   the compiler will autogenerate a default constructor if not explicit.
-    Automaton() : Automaton(TokenType::UNDEFINED) {}
-
-    Automaton(TokenType type) { this->type = type; }
-
-    // Start the automaton and return the number of characters read
-    //   read == 0 indicates the input was rejected
-    //   read  > 0 indicates the input was accepted
-    int Start(const std::string& input) {
-        newLines = 0;
-        inputRead = 0;
-        index = 0;
-        S0(input);
-        return inputRead;
+    AutomatonResult start(const std::string& input, int currIndex, int currLine) {
+        return s0(input, currIndex, currLine);
     }
 
     // Every subclass must define this method
-    virtual void S0(const std::string& input) = 0;
+    virtual AutomatonResult s0(const std::string& input, int currIndex, int currLine) = 0;
 
-    void Serr() {
-        // Indicate the input was rejected
-        inputRead = 0;
+    AutomatonResult sErr() {
+        return nullopt;
     }
-
-    virtual Token* CreateToken(std::string input, int lineNumber) { return new Token(type, input, lineNumber); }
-
-    int NewLinesRead() const { return newLines; }
 };
 
 #endif // AUTOMATON_H

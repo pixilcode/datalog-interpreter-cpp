@@ -23,8 +23,7 @@ enum class TokenType {
     UNDEFINED
 };
 
-struct Token
-{
+struct Token {
 TokenType type;
 std::string lexeme;
 int line;
