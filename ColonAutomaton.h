@@ -1,12 +1,14 @@
 #ifndef COLONAUTOMATON_H
 #define COLONAUTOMATON_H
 
+#include <string>
 #include "Automaton.h"
 
-class ColonAutomaton : public Automaton
-{
+using namespace std;
+
+class ColonAutomaton : public Automaton {
 public:
-    AutomatonResult s0(const std::string &input, int currIndex, int currLine) override;
+    AutomatonResult s0(const string& input, int currIndex, int currLine) override;
     TestResult testAutomaton() override;
 };
 

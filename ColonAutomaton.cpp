@@ -14,9 +14,12 @@ TestResult ColonAutomaton::testAutomaton() {
     auto resultA = colon.start(":", 0, 1);
     auto resultB = colon.start("a", 0, 1);
     auto resultC = colon.start("", 0, 1);
+    auto resultD = colon.start(":-", 0, 1);
 
     return test::all({
         test::assert(resultA.has_value(), "colon - didn't match colon"),
-        test::assert(!resultB.has_value(), "colon - matched non-colon")
+        test::assert(!resultB.has_value(), "colon - matched non-colon 'a'"),
+        test::assert(!resultC.has_value(), "colon - matched empty string"),
+        test::assert(resultD.has_value(), "colon - didn't match colon")
     });
 }
