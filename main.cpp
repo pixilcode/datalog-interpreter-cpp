@@ -1,14 +1,27 @@
 #include <iostream>
-#include "Lexer.h"
+#include <vector>
+#include "ColonAutomaton.h"
+
+void runTests();
 
 int main(int argc, char** argv) {
 
-    std::cout << "Hello world!" << std::endl;
-    //Lexer* lexer = new Lexer();
+    // Debug
+    runTests();
 
-    // TODO
-
-    //delete lexer;
+    cout << "done!" << endl;
 
     return 0;
+}
+
+void runTests() {
+    vector<Automaton*> automatons = {
+            new ColonAutomaton()
+    };
+
+    for(auto automaton : automatons) {
+        auto testResult = automaton->testAutomaton();
+        if (!test::is_ok(testResult))
+            cout << "ERROR: " << test::get_error_message(testResult) << endl;
+    }
 }

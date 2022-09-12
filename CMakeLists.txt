@@ -9,9 +9,5 @@ add_executable(project_1
         Automaton.h
         ColonAutomaton.cpp
         ColonAutomaton.h
-        ColonDashAutomaton.cpp
-        ColonDashAutomaton.h
-        Lexer.cpp
-        Lexer.h
         main.cpp
-        Token.h)
+        Token.h Test.h Test.cpp)

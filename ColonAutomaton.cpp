@@ -8,3 +8,16 @@ AutomatonResult ColonAutomaton::s0(const string &input, int currIndex, int currL
         return sErr();
     }
 }
+
+TestResult ColonAutomaton::testAutomaton() {
+    ColonAutomaton colon;
+    auto resultA = colon.start(":", 0, 1);
+    auto resultB = colon.start("a", 0, 1);
+
+
+
+    return test::all({
+        test::assert(resultA.has_value(), "colon - didn't match colon"),
+        test::assert(!resultA.has_value(), "colon - matched non-colon")
+    });
+}

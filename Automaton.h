@@ -4,6 +4,7 @@
 #include <tuple>
 #include <utility>
 #include "Token.h"
+#include "Test.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ public:
     AutomatonResult sErr() {
         return nullopt;
     }
+
+    virtual TestResult testAutomaton() = 0;
 };
 
 #endif // AUTOMATON_H

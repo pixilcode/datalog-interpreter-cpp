@@ -6,7 +6,8 @@
 class ColonAutomaton : public Automaton
 {
 public:
-    AutomatonResult s0(const std::string &input, int currIndex, int currLine);
+    AutomatonResult s0(const std::string &input, int currIndex, int currLine) override;
+    TestResult testAutomaton() override;
 };
 
 #endif // COLONAUTOMATON_H
