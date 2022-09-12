@@ -16,10 +16,26 @@ TestResult ColonAutomaton::testAutomaton() {
     auto resultC = colon.start("", 0, 1);
     auto resultD = colon.start(":-", 0, 1);
 
-    return test::all({
+    auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "colon - didn't match colon"),
         test::assert(!resultB.has_value(), "colon - matched non-colon 'a'"),
         test::assert(!resultC.has_value(), "colon - matched empty string"),
         test::assert(resultD.has_value(), "colon - didn't match colon")
+    });
+
+    auto resultAValue = resultA.value();
+    auto resultAToken = resultAValue.token;
+
+    auto correctValueTests = test::all({
+        test::assert(resultAValue.finalIndex == 1, "colon - didn't advance index"),
+        test::assert(resultAValue.finalLine == 1, "colon - incorrect line number"),
+        test::assert(resultAToken.type == TokenType::COLON, "colon - incorrect token type"),
+        test::assert(resultAToken.lexeme == ":", "colon - incorrect lexeme"),
+        test::assert(resultAToken.line == 1, "colon - incorrect line")
+    });
+
+    return test::all({
+        hasValueTests,
+        correctValueTests
     });
 }
