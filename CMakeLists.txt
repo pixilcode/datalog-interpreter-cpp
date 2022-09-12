@@ -10,4 +10,4 @@ add_executable(project_1
         ColonAutomaton.cpp
         ColonAutomaton.h
         main.cpp
-        Token.h Test.h Test.cpp)
+        Token.h Test.h Test.cpp ColonDashAutomaton.cpp ColonDashAutomaton.h)
