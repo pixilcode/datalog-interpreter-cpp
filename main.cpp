@@ -1,13 +1,16 @@
+#include <cstdlib>
 #include <iostream>
+#include <cstring>
 #include <vector>
-#include "ColonAutomaton.h"
-#include "ColonDashAutomaton.h"
+#include "automaton/all.h" // include all automatons
 
 void runTests();
 
 int main(int argc, char** argv) {
     // Debug
-    runTests();
+    cout << std::getenv("DEBUG") << std::endl;
+    if (strcmp(std::getenv("DEBUG"), "true") == 0)
+        runTests();
 
     return 0;
 }
