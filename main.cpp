@@ -8,7 +8,6 @@ void runTests();
 
 int main(int argc, char** argv) {
     // Debug
-    cout << std::getenv("DEBUG") << std::endl;
     if (strcmp(std::getenv("DEBUG"), "true") == 0)
         runTests();
 
