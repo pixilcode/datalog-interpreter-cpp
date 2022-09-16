@@ -22,14 +22,14 @@ struct AutomatonSuccess {
 typedef optional<AutomatonSuccess> AutomatonResult;
 
 class Automaton {
+private:
+    virtual AutomatonResult s0(const string& input, int currIndex, int currLine) = 0;
 public:
     AutomatonResult start(const string& input, int currIndex, int currLine) {
         return s0(input, currIndex, currLine);
     }
 
-    virtual AutomatonResult s0(const string& input, int currIndex, int currLine) = 0;
-
-    AutomatonResult sErr() {
+    static AutomatonResult sErr() {
         return nullopt;
     }
 
