@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(.)
 
 add_executable(project_1
-        Automaton.h
-        ColonAutomaton.cpp
-        ColonAutomaton.h
+        automaton/Automaton.h
+        automaton/ColonAutomaton.cpp
+        automaton/ColonAutomaton.h
         main.cpp
-        Token.h Test.h Test.cpp ColonDashAutomaton.cpp ColonDashAutomaton.h)
+        Token.h Test.h Test.cpp automaton/ColonDashAutomaton.cpp automaton/ColonDashAutomaton.h automaton/all.h)
