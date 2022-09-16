@@ -39,11 +39,11 @@ TestResult ColonDashAutomaton::testAutomaton() {
     auto resultToken = resultValue.token;
 
     auto correctValueTests = test::all({
-        test::assert(resultValue.finalIndex == 1, "colon - didn't advance index"),
-        test::assert(resultValue.finalLine == 1, "colon - incorrect line number"),
-        test::assert(resultToken.type == TokenType::COLON, "colon - incorrect token type"),
-        test::assert(resultToken.lexeme == ":", "colon - incorrect lexeme"),
-        test::assert(resultToken.line == 1, "colon - incorrect line")
+        test::assert(resultValue.finalIndex == 1, "colondash - didn't advance index"),
+        test::assert(resultValue.finalLine == 1, "colondash - incorrect line number"),
+        test::assert(resultToken.type == TokenType::COLON, "colondash - incorrect token type"),
+        test::assert(resultToken.lexeme == ":", "colondash - incorrect lexeme"),
+        test::assert(resultToken.line == 1, "colondash - incorrect line")
     });
 
     return test::all({
