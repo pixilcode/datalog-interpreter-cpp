@@ -1,0 +1,41 @@
+#include "{{token-name}}Automaton.h"
+
+AutomatonResult {{token-name}}Automaton::s0(const string &input, int currIndex, int currLine) {
+    if (currIndex < input.length() && input[currIndex] == '{{character}}') {
+        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
+        return AutomatonSuccess(token, currIndex + 1, currLine);
+    } else {
+        return sErr();
+    }
+}
+
+TestResult {{token-name}}Automaton::testAutomaton() {
+    {{token-name}}Automaton {{test-name}};
+    auto resultA = {{test-name}}.start(":", 0, 1);
+    auto resultB = {{test-name}}.start("a", 0, 1);
+    auto resultC = {{test-name}}.start("", 0, 1);
+    auto resultD = {{test-name}}.start(":-", 0, 1);
+
+    auto hasValueTests = test::all({
+        test::assert(resultA.has_value(), "{{test-name}} - didn't match {{test-name}}"),
+        test::assert(!resultB.has_value(), "{{test-name}} - matched non-{{test-name}} 'a'"),
+        test::assert(!resultC.has_value(), "{{test-name}} - matched empty string"),
+        test::assert(resultD.has_value(), "{{test-name}} - didn't match {{test-name}}")
+    });
+
+    auto resultAValue = resultA.value();
+    auto resultAToken = resultAValue.token;
+
+    auto correctValueTests = test::all({
+        test::assert(resultAValue.finalIndex == 1, "{{test-name}} - didn't advance index"),
+        test::assert(resultAValue.finalLine == 1, "{{test-name}} - incorrect line number"),
+        test::assert(resultAToken.type == TokenType::{{all-caps-name}}, "{{test-name}} - incorrect token type"),
+        test::assert(resultAToken.lexeme == ":", "{{test-name}} - incorrect lexeme"),
+        test::assert(resultAToken.line == 1, "{{test-name}} - incorrect line")
+    });
+
+    return test::all({
+        hasValueTests,
+        correctValueTests
+    });
+}

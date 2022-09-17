@@ -1,0 +1,15 @@
+#ifndef {{all-caps-name}}AUTOMATON_H
+#define {{all-caps-name}}AUTOMATON_H
+
+#include <string>
+#include "Automaton.h"
+
+using namespace std;
+
+class {{token-name}}Automaton : public Automaton {
+public:
+    AutomatonResult s0(const string& input, int currIndex, int currLine) override;
+    TestResult testAutomaton() override;
+};
+
+#endif // {{all-caps-name}}AUTOMATON_H
