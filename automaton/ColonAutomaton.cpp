@@ -11,7 +11,7 @@ AutomatonResult ColonAutomaton::s0(const string &input, int currIndex, int currL
 
 TestResult ColonAutomaton::testAutomaton() {
     ColonAutomaton colon;
-    auto resultA = colon.start(":", 0, 1);
+    auto resultA = colon.start(":, 0, 1);
     auto resultB = colon.start("a", 0, 1);
     auto resultC = colon.start("", 0, 1);
     auto resultD = colon.start(":-", 0, 1);
@@ -22,6 +22,8 @@ TestResult ColonAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "colon - matched empty string"),
         test::assert(resultD.has_value(), "colon - didn't match colon")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

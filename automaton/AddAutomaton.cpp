@@ -11,10 +11,10 @@ AutomatonResult AddAutomaton::s0(const string &input, int currIndex, int currLin
 
 TestResult AddAutomaton::testAutomaton() {
     AddAutomaton add;
-    auto resultA = add.start(":", 0, 1);
+    auto resultA = add.start("+, 0, 1);
     auto resultB = add.start("a", 0, 1);
     auto resultC = add.start("", 0, 1);
-    auto resultD = add.start(":-", 0, 1);
+    auto resultD = add.start("+-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "add - didn't match add"),
@@ -22,6 +22,8 @@ TestResult AddAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "add - matched empty string"),
         test::assert(resultD.has_value(), "add - didn't match add")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

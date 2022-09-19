@@ -11,10 +11,10 @@ AutomatonResult PeriodAutomaton::s0(const string &input, int currIndex, int curr
 
 TestResult PeriodAutomaton::testAutomaton() {
     PeriodAutomaton period;
-    auto resultA = period.start(":", 0, 1);
+    auto resultA = period.start("., 0, 1);
     auto resultB = period.start("a", 0, 1);
     auto resultC = period.start("", 0, 1);
-    auto resultD = period.start(":-", 0, 1);
+    auto resultD = period.start(".-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "period - didn't match period"),
@@ -22,6 +22,8 @@ TestResult PeriodAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "period - matched empty string"),
         test::assert(resultD.has_value(), "period - didn't match period")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

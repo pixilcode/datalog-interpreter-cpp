@@ -37,7 +37,9 @@
 
 (for-each
  (lambda (it) (apply generate-single-char-automaton it))
- '(("Period" ".")
+ '(("Colon" ":")
+   ("Comma" ",")
+   ("Period" ".")
    ("QuestionMark" "?" "Q_MARK")
    ("LeftParen" "(" "LEFT_PAREN")
    ("RightParen" ")" "RIGHT_PAREN")

@@ -11,10 +11,10 @@ AutomatonResult CommaAutomaton::s0(const string &input, int currIndex, int currL
 
 TestResult CommaAutomaton::testAutomaton() {
     CommaAutomaton comma;
-    auto resultA = comma.start(":", 0, 1);
+    auto resultA = comma.start(",, 0, 1);
     auto resultB = comma.start("a", 0, 1);
     auto resultC = comma.start("", 0, 1);
-    auto resultD = comma.start(":-", 0, 1);
+    auto resultD = comma.start(",-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "comma - didn't match comma"),
@@ -22,6 +22,8 @@ TestResult CommaAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "comma - matched empty string"),
         test::assert(resultD.has_value(), "comma - didn't match comma")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

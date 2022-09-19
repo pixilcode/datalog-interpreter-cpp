@@ -11,10 +11,10 @@ AutomatonResult QuestionMarkAutomaton::s0(const string &input, int currIndex, in
 
 TestResult QuestionMarkAutomaton::testAutomaton() {
     QuestionMarkAutomaton questionmark;
-    auto resultA = questionmark.start(":", 0, 1);
+    auto resultA = questionmark.start("?, 0, 1);
     auto resultB = questionmark.start("a", 0, 1);
     auto resultC = questionmark.start("", 0, 1);
-    auto resultD = questionmark.start(":-", 0, 1);
+    auto resultD = questionmark.start("?-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "questionmark - didn't match questionmark"),
@@ -22,6 +22,8 @@ TestResult QuestionMarkAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "questionmark - matched empty string"),
         test::assert(resultD.has_value(), "questionmark - didn't match questionmark")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

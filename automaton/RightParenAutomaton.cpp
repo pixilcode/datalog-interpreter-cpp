@@ -11,10 +11,10 @@ AutomatonResult RightParenAutomaton::s0(const string &input, int currIndex, int 
 
 TestResult RightParenAutomaton::testAutomaton() {
     RightParenAutomaton rightparen;
-    auto resultA = rightparen.start(":", 0, 1);
+    auto resultA = rightparen.start("), 0, 1);
     auto resultB = rightparen.start("a", 0, 1);
     auto resultC = rightparen.start("", 0, 1);
-    auto resultD = rightparen.start(":-", 0, 1);
+    auto resultD = rightparen.start(")-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "rightparen - didn't match rightparen"),
@@ -22,6 +22,8 @@ TestResult RightParenAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "rightparen - matched empty string"),
         test::assert(resultD.has_value(), "rightparen - didn't match rightparen")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

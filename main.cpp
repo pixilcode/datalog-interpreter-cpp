@@ -16,8 +16,15 @@ int main(int argc, char** argv) {
 
 void runTests() {
     vector<Automaton*> automatons = {
+            new AddAutomaton(),
             new ColonAutomaton(),
-            new ColonDashAutomaton()
+            new ColonDashAutomaton(),
+            new CommaAutomaton(),
+            new LeftParenAutomaton(),
+            new MultiplyAutomaton(),
+            new PeriodAutomaton(),
+            new QuestionMarkAutomaton(),
+            new RightParenAutomaton()
     };
 
     cout << "running tests..." << endl;

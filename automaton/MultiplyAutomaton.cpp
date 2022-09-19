@@ -11,10 +11,10 @@ AutomatonResult MultiplyAutomaton::s0(const string &input, int currIndex, int cu
 
 TestResult MultiplyAutomaton::testAutomaton() {
     MultiplyAutomaton multiply;
-    auto resultA = multiply.start(":", 0, 1);
+    auto resultA = multiply.start("*, 0, 1);
     auto resultB = multiply.start("a", 0, 1);
     auto resultC = multiply.start("", 0, 1);
-    auto resultD = multiply.start(":-", 0, 1);
+    auto resultD = multiply.start("*-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "multiply - didn't match multiply"),
@@ -22,6 +22,8 @@ TestResult MultiplyAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "multiply - matched empty string"),
         test::assert(resultD.has_value(), "multiply - didn't match multiply")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;

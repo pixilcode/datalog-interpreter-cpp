@@ -11,10 +11,10 @@ AutomatonResult LeftParenAutomaton::s0(const string &input, int currIndex, int c
 
 TestResult LeftParenAutomaton::testAutomaton() {
     LeftParenAutomaton leftparen;
-    auto resultA = leftparen.start(":", 0, 1);
+    auto resultA = leftparen.start("(, 0, 1);
     auto resultB = leftparen.start("a", 0, 1);
     auto resultC = leftparen.start("", 0, 1);
-    auto resultD = leftparen.start(":-", 0, 1);
+    auto resultD = leftparen.start("(-", 0, 1);
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "leftparen - didn't match leftparen"),
@@ -22,6 +22,8 @@ TestResult LeftParenAutomaton::testAutomaton() {
         test::assert(!resultC.has_value(), "leftparen - matched empty string"),
         test::assert(resultD.has_value(), "leftparen - didn't match leftparen")
     });
+
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
 
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;
