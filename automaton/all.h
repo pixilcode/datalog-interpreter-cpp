@@ -12,6 +12,6 @@
 #include "QuestionMarkAutomaton.h"
 #include "RightParenAutomaton.h"
 #include "SchemesAutomaton.h"
-
+#include "FactsAutomaton.h"
 
 #endif //PROJECT_1_ALL_H
