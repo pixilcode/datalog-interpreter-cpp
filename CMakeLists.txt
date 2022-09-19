@@ -16,19 +16,23 @@ add_executable(project_1
         automaton/ColonDashAutomaton.cpp
         automaton/CommaAutomaton.h
         automaton/CommaAutomaton.cpp
+        automaton/FactsAutomaton.h
+        automaton/FactsAutomaton.cpp
         automaton/LeftParenAutomaton.h
         automaton/LeftParenAutomaton.cpp
         automaton/MultiplyAutomaton.h
         automaton/MultiplyAutomaton.cpp
         automaton/PeriodAutomaton.h
         automaton/PeriodAutomaton.cpp
+        automaton/QueriesAutomaton.h
+        automaton/QueriesAutomaton.cpp
         automaton/QuestionMarkAutomaton.h
         automaton/QuestionMarkAutomaton.cpp
         automaton/RightParenAutomaton.h
         automaton/RightParenAutomaton.cpp
+        automaton/RulesAutomaton.h
+        automaton/RulesAutomaton.cpp
         automaton/SchemesAutomaton.h
         automaton/SchemesAutomaton.cpp
-        automaton/FactsAutomaton.h
-        automaton/FactsAutomaton.cpp
         main.cpp
         Token.h Test.h Test.cpp)

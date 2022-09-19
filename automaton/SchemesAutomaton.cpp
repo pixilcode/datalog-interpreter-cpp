@@ -18,7 +18,7 @@ TestResult SchemesAutomaton::testAutomaton() {
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "schemes - didn't match Schemes"),
-        test::assert(!resultB.has_value(), "schemes - matched non-schemes 'a'"),
+        test::assert(!resultB.has_value(), "schemes - matched non-Schemes 'a'"),
         test::assert(!resultC.has_value(), "schemes - matched empty string"),
         test::assert(resultD.has_value(), "schemes - didn't match Schemes")
     });

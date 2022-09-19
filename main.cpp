@@ -20,13 +20,15 @@ void runTests() {
             new ColonAutomaton(),
             new ColonDashAutomaton(),
             new CommaAutomaton(),
+            new FactsAutomaton(),
             new LeftParenAutomaton(),
             new MultiplyAutomaton(),
             new PeriodAutomaton(),
+            new QueriesAutomaton(),
             new QuestionMarkAutomaton(),
             new RightParenAutomaton(),
+            new RulesAutomaton(),
             new SchemesAutomaton(),
-            new FactsAutomaton()
     };
 
     cout << "running tests..." << endl;

@@ -2,7 +2,7 @@
 
 AutomatonResult FactsAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex + 5 <= input.length() && input.substr(currIndex, currIndex + 5) == "Facts") {
-        auto token = Token(TokenType::SCHEMES, input.substr(currIndex, currIndex + 5), currLine);
+        auto token = Token(TokenType::FACTS, input.substr(currIndex, currIndex + 5), currLine);
         return AutomatonSuccess(token, currIndex + 5, currLine);
     } else {
         return sErr();
@@ -18,7 +18,7 @@ TestResult FactsAutomaton::testAutomaton() {
 
     auto hasValueTests = test::all({
         test::assert(resultA.has_value(), "facts - didn't match Facts"),
-        test::assert(!resultB.has_value(), "facts - matched non-facts 'a'"),
+        test::assert(!resultB.has_value(), "facts - matched non-Facts 'a'"),
         test::assert(!resultC.has_value(), "facts - matched empty string"),
         test::assert(resultD.has_value(), "facts - didn't match Facts")
     });
@@ -31,7 +31,7 @@ TestResult FactsAutomaton::testAutomaton() {
     auto correctValueTests = test::all({
         test::assert(resultAValue.finalIndex == 5, "facts - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "facts - incorrect line number"),
-        test::assert(resultAToken.type == TokenType::SCHEMES, "facts - incorrect token type"),
+        test::assert(resultAToken.type == TokenType::FACTS, "facts - incorrect token type"),
         test::assert(resultAToken.lexeme == "Facts", "facts - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "facts - incorrect line")
     });
