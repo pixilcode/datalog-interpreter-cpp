@@ -1,9 +1,9 @@
 #include "FactsAutomaton.h"
 
 AutomatonResult FactsAutomaton::s0(const string &input, int currIndex, int currLine) {
-    if (currIndex + 7 <= input.length() && input.substr(currIndex, currIndex + 7) == "facts") {
-        auto token = Token(TokenType::SCHEMES, input.substr(currIndex, currIndex + 7), currLine);
-        return AutomatonSuccess(token, currIndex + 7, currLine);
+    if (currIndex + 5 <= input.length() && input.substr(currIndex, currIndex + 5) == "facts") {
+        auto token = Token(TokenType::SCHEMES, input.substr(currIndex, currIndex + 5), currLine);
+        return AutomatonSuccess(token, currIndex + 5, currLine);
     } else {
         return sErr();
     }
@@ -29,7 +29,7 @@ TestResult FactsAutomaton::testAutomaton() {
     auto resultAToken = resultAValue.token;
 
     auto correctValueTests = test::all({
-        test::assert(resultAValue.finalIndex == 7, "facts - didn't advance index"),
+        test::assert(resultAValue.finalIndex == 5, "facts - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "facts - incorrect line number"),
         test::assert(resultAToken.type == TokenType::SCHEMES, "facts - incorrect token type"),
         test::assert(resultAToken.lexeme == "facts", "facts - incorrect lexeme"),
