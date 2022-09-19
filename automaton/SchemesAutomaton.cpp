@@ -1,7 +1,7 @@
 #include "SchemesAutomaton.h"
 
 AutomatonResult SchemesAutomaton::s0(const string &input, int currIndex, int currLine) {
-    if (currIndex + 7 <= input.length() && input.substr(currIndex, currIndex + 7) == "schemes") {
+    if (currIndex + 7 <= input.length() && input.substr(currIndex, currIndex + 7) == "Schemes") {
         auto token = Token(TokenType::SCHEMES, input.substr(currIndex, currIndex + 7), currLine);
         return AutomatonSuccess(token, currIndex + 7, currLine);
     } else {
@@ -11,16 +11,16 @@ AutomatonResult SchemesAutomaton::s0(const string &input, int currIndex, int cur
 
 TestResult SchemesAutomaton::testAutomaton() {
     SchemesAutomaton schemes;
-    auto resultA = schemes.start("schemes", 0, 1);
+    auto resultA = schemes.start("Schemes", 0, 1);
     auto resultB = schemes.start("a", 0, 1);
     auto resultC = schemes.start("", 0, 1);
-    auto resultD = schemes.start("schemes:", 0, 1);
+    auto resultD = schemes.start("Schemes:", 0, 1);
 
     auto hasValueTests = test::all({
-        test::assert(resultA.has_value(), "schemes - didn't match schemes"),
+        test::assert(resultA.has_value(), "schemes - didn't match Schemes"),
         test::assert(!resultB.has_value(), "schemes - matched non-schemes 'a'"),
         test::assert(!resultC.has_value(), "schemes - matched empty string"),
-        test::assert(resultD.has_value(), "schemes - didn't match schemes")
+        test::assert(resultD.has_value(), "schemes - didn't match Schemes")
     });
 
     if (!test::is_ok(hasValueTests)) return hasValueTests;
@@ -32,7 +32,7 @@ TestResult SchemesAutomaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 7, "schemes - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "schemes - incorrect line number"),
         test::assert(resultAToken.type == TokenType::SCHEMES, "schemes - incorrect token type"),
-        test::assert(resultAToken.lexeme == "schemes", "schemes - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == "Schemes", "schemes - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "schemes - incorrect line")
     });
 
