@@ -11,7 +11,7 @@ AutomatonResult PeriodAutomaton::s0(const string &input, int currIndex, int curr
 
 TestResult PeriodAutomaton::testAutomaton() {
     PeriodAutomaton period;
-    auto resultA = period.start("., 0, 1);
+    auto resultA = period.start(".", 0, 1);
     auto resultB = period.start("a", 0, 1);
     auto resultC = period.start("", 0, 1);
     auto resultD = period.start(".-", 0, 1);

@@ -11,7 +11,7 @@ AutomatonResult AddAutomaton::s0(const string &input, int currIndex, int currLin
 
 TestResult AddAutomaton::testAutomaton() {
     AddAutomaton add;
-    auto resultA = add.start("+, 0, 1);
+    auto resultA = add.start("+", 0, 1);
     auto resultB = add.start("a", 0, 1);
     auto resultC = add.start("", 0, 1);
     auto resultD = add.start("+-", 0, 1);

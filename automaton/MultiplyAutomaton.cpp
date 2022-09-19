@@ -11,7 +11,7 @@ AutomatonResult MultiplyAutomaton::s0(const string &input, int currIndex, int cu
 
 TestResult MultiplyAutomaton::testAutomaton() {
     MultiplyAutomaton multiply;
-    auto resultA = multiply.start("*, 0, 1);
+    auto resultA = multiply.start("*", 0, 1);
     auto resultB = multiply.start("a", 0, 1);
     auto resultC = multiply.start("", 0, 1);
     auto resultD = multiply.start("*-", 0, 1);

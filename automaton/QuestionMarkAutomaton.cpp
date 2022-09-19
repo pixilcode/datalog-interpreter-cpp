@@ -11,7 +11,7 @@ AutomatonResult QuestionMarkAutomaton::s0(const string &input, int currIndex, in
 
 TestResult QuestionMarkAutomaton::testAutomaton() {
     QuestionMarkAutomaton questionmark;
-    auto resultA = questionmark.start("?, 0, 1);
+    auto resultA = questionmark.start("?", 0, 1);
     auto resultB = questionmark.start("a", 0, 1);
     auto resultC = questionmark.start("", 0, 1);
     auto resultD = questionmark.start("?-", 0, 1);

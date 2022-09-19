@@ -11,7 +11,7 @@ AutomatonResult ColonAutomaton::s0(const string &input, int currIndex, int currL
 
 TestResult ColonAutomaton::testAutomaton() {
     ColonAutomaton colon;
-    auto resultA = colon.start(":, 0, 1);
+    auto resultA = colon.start(":", 0, 1);
     auto resultB = colon.start("a", 0, 1);
     auto resultC = colon.start("", 0, 1);
     auto resultD = colon.start(":-", 0, 1);

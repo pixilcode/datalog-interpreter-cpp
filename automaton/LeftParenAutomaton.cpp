@@ -11,7 +11,7 @@ AutomatonResult LeftParenAutomaton::s0(const string &input, int currIndex, int c
 
 TestResult LeftParenAutomaton::testAutomaton() {
     LeftParenAutomaton leftparen;
-    auto resultA = leftparen.start("(, 0, 1);
+    auto resultA = leftparen.start("(", 0, 1);
     auto resultB = leftparen.start("a", 0, 1);
     auto resultC = leftparen.start("", 0, 1);
     auto resultD = leftparen.start("(-", 0, 1);

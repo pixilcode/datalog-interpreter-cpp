@@ -11,7 +11,7 @@ AutomatonResult {{token-name}}Automaton::s0(const string &input, int currIndex, 
 
 TestResult {{token-name}}Automaton::testAutomaton() {
     {{token-name}}Automaton {{test-name}};
-    auto resultA = {{test-name}}.start("{{character}}, 0, 1);
+    auto resultA = {{test-name}}.start("{{character}}", 0, 1);
     auto resultB = {{test-name}}.start("a", 0, 1);
     auto resultC = {{test-name}}.start("", 0, 1);
     auto resultD = {{test-name}}.start("{{character}}-", 0, 1);

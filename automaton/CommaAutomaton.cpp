@@ -11,7 +11,7 @@ AutomatonResult CommaAutomaton::s0(const string &input, int currIndex, int currL
 
 TestResult CommaAutomaton::testAutomaton() {
     CommaAutomaton comma;
-    auto resultA = comma.start(",, 0, 1);
+    auto resultA = comma.start(",", 0, 1);
     auto resultB = comma.start("a", 0, 1);
     auto resultC = comma.start("", 0, 1);
     auto resultD = comma.start(",-", 0, 1);
