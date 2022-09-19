@@ -2,7 +2,7 @@
 
 AutomatonResult PeriodAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '.') {
-        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::PERIOD, input.substr(currIndex, currIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
@@ -32,7 +32,7 @@ TestResult PeriodAutomaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 1, "period - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "period - incorrect line number"),
         test::assert(resultAToken.type == TokenType::PERIOD, "period - incorrect token type"),
-        test::assert(resultAToken.lexeme == ":", "period - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == ".", "period - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "period - incorrect line")
     });
 

@@ -2,7 +2,7 @@
 
 AutomatonResult RightParenAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == ')') {
-        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::RIGHT_PAREN, input.substr(currIndex, currIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
@@ -32,7 +32,7 @@ TestResult RightParenAutomaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 1, "rightparen - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "rightparen - incorrect line number"),
         test::assert(resultAToken.type == TokenType::RIGHT_PAREN, "rightparen - incorrect token type"),
-        test::assert(resultAToken.lexeme == ":", "rightparen - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == ")", "rightparen - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "rightparen - incorrect line")
     });
 

@@ -2,7 +2,7 @@
 
 AutomatonResult CommaAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == ',') {
-        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::COMMA, input.substr(currIndex, currIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
@@ -32,7 +32,7 @@ TestResult CommaAutomaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 1, "comma - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "comma - incorrect line number"),
         test::assert(resultAToken.type == TokenType::COMMA, "comma - incorrect token type"),
-        test::assert(resultAToken.lexeme == ":", "comma - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == ",", "comma - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "comma - incorrect line")
     });
 

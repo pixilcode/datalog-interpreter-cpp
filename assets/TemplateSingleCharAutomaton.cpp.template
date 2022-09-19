@@ -2,7 +2,7 @@
 
 AutomatonResult {{token-name}}Automaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '{{character}}') {
-        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::{{all-caps-name}}, input.substr(currIndex, currIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
@@ -32,7 +32,7 @@ TestResult {{token-name}}Automaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 1, "{{test-name}} - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "{{test-name}} - incorrect line number"),
         test::assert(resultAToken.type == TokenType::{{all-caps-name}}, "{{test-name}} - incorrect token type"),
-        test::assert(resultAToken.lexeme == ":", "{{test-name}} - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == "{{character}}", "{{test-name}} - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "{{test-name}} - incorrect line")
     });
 

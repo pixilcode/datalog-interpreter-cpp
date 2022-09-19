@@ -23,6 +23,8 @@ TestResult SchemesAutomaton::testAutomaton() {
         test::assert(resultD.has_value(), "schemes - didn't match schemes")
     });
 
+    if (!test::is_ok(hasValueTests)) return hasValueTests;
+
     auto resultAValue = resultA.value();
     auto resultAToken = resultAValue.token;
 
