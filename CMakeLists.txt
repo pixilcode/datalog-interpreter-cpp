@@ -26,5 +26,7 @@ add_executable(project_1
         automaton/QuestionMarkAutomaton.cpp
         automaton/RightParenAutomaton.h
         automaton/RightParenAutomaton.cpp
+        automaton/SchemesAutomaton.h
+        automaton/SchemesAutomaton.cpp
         main.cpp
         Token.h Test.h Test.cpp)

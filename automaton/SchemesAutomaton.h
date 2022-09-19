@@ -1,0 +1,16 @@
+#ifndef SCHEMESAUTOMATON_H
+#define SCHEMESAUTOMATON_H
+
+#include <string>
+#include "Automaton.h"
+
+using namespace std;
+
+class SchemesAutomaton : public Automaton {
+public:
+    AutomatonResult s0(const string& input, int currIndex, int currLine) override;
+    TestResult testAutomaton() override;
+};
+
+#endif // SCHEMESAUTOMATON_H
+

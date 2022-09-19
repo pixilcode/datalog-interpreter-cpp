@@ -11,5 +11,7 @@
 #include "PeriodAutomaton.h"
 #include "QuestionMarkAutomaton.h"
 #include "RightParenAutomaton.h"
+#include "SchemesAutomaton.h"
+
 
 #endif //PROJECT_1_ALL_H

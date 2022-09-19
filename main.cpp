@@ -24,7 +24,8 @@ void runTests() {
             new MultiplyAutomaton(),
             new PeriodAutomaton(),
             new QuestionMarkAutomaton(),
-            new RightParenAutomaton()
+            new RightParenAutomaton(),
+            new SchemesAutomaton()
     };
 
     cout << "running tests..." << endl;
