@@ -1,9 +1,9 @@
 #include "SchemesAutomaton.h"
 
 AutomatonResult SchemesAutomaton::s0(const string &input, int currIndex, int currLine) {
-    if (currIndex < input.length() && input[currIndex] == ':') {
-        auto token = Token(TokenType::COLON, input.substr(currIndex, currIndex + 1), currLine);
-        return AutomatonSuccess(token, currIndex + 1, currLine);
+    if (currIndex + 7 <= input.length() && input.substr(currIndex, currIndex + 7) == "schemes") {
+        auto token = Token(TokenType::SCHEMES, input.substr(currIndex, currIndex + 7), currLine);
+        return AutomatonSuccess(token, currIndex + 7, currLine);
     } else {
         return sErr();
     }
@@ -32,7 +32,7 @@ TestResult SchemesAutomaton::testAutomaton() {
         test::assert(resultAValue.finalIndex == 7, "schemes - didn't advance index"),
         test::assert(resultAValue.finalLine == 1, "schemes - incorrect line number"),
         test::assert(resultAToken.type == TokenType::SCHEMES, "schemes - incorrect token type"),
-        test::assert(resultAToken.lexeme == ":", "schemes - incorrect lexeme"),
+        test::assert(resultAToken.lexeme == "schemes", "schemes - incorrect lexeme"),
         test::assert(resultAToken.line == 1, "schemes - incorrect line")
     });
 
