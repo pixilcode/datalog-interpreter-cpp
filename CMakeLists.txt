@@ -36,5 +36,7 @@ add_executable(project_1
         automaton/RulesAutomaton.cpp
         automaton/SchemesAutomaton.h
         automaton/SchemesAutomaton.cpp
+        automaton/StringAutomaton.h
+        automaton/StringAutomaton.cpp
         main.cpp
-        Token.h Test.h Test.cpp)
+        Token.h Token.cpp Test.h Test.cpp)

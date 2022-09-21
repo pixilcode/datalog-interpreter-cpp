@@ -30,6 +30,7 @@ void runTests() {
             new RightParenAutomaton(),
             new RulesAutomaton(),
             new SchemesAutomaton(),
+            new StringAutomaton(),
     };
 
     cout << "running tests..." << endl;

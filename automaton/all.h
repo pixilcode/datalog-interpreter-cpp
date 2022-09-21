@@ -16,5 +16,6 @@
 #include "RightParenAutomaton.h"
 #include "RulesAutomaton.h"
 #include "SchemesAutomaton.h"
+#include "StringAutomaton.h"
 
 #endif //PROJECT_1_ALL_H
