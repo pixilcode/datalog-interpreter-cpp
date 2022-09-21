@@ -3,10 +3,18 @@
 
 AutomatonResult IdAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length() && isalpha(input[currIndex])) {
-        auto token = Token(TokenType::FACTS, input.substr(currIndex, currIndex + 5), currLine);
-        return AutomatonSuccess(token, currIndex + 5, currLine);
+        return s1(input, currIndex, currIndex + 1, currLine);
     } else {
         return sErr();
+    }
+}
+
+AutomatonResult IdAutomaton::s1(const std::string &input, int initIndex, int currIndex, int currLine) {
+    if (currIndex < input.length() && isalnum(input[currIndex])) {
+        return s1(input, initIndex, currIndex + 1, currLine);
+    } else {
+        auto token = Token(TokenType::ID, input.substr(initIndex, currIndex), currLine);
+        return AutomatonSuccess(token, currIndex, currLine);
     }
 }
 
@@ -37,7 +45,13 @@ TestResult IdAutomaton::testAutomaton() {
     };
 
     auto correctValueTests = test::all({
-
+        test::assert(successes[0].finalIndex == 3, "id - didn't advance index (0)"),
+        test::assert(successes[1].finalIndex == 6, "id - didn't advance index (1)"),
+        test::assert(successes[2].finalIndex == 3, "id - didn't advance index (2)"),
+        test::assert(successes[0].finalLine == 1, "id - advanced line (0)"),
+        test::assert(successes[1].finalLine == 1, "id - advanced line (1)"),
+        test::assert(successes[2].finalLine == 1, "id - advanced line (2)"),
+        test::assert(successes[0].token == Token(TokenType::ID, "abc", 1), "id - token didn't match (0)"),
     });
 
     return test::all({
