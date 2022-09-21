@@ -35,7 +35,7 @@ struct Token {
         line(line) {}
 };
 
-bool operator==(const Token& rhs, const Token& lhs) {
+inline bool operator==(const Token& rhs, const Token& lhs) {
     return
     rhs.type == lhs.type &&
     rhs.lexeme == lhs.lexeme &&
