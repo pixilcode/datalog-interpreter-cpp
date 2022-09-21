@@ -18,6 +18,8 @@ add_executable(project_1
         automaton/CommaAutomaton.cpp
         automaton/FactsAutomaton.h
         automaton/FactsAutomaton.cpp
+        automaton/IdAutomaton.h
+        automaton/IdAutomaton.cpp
         automaton/LeftParenAutomaton.h
         automaton/LeftParenAutomaton.cpp
         automaton/MultiplyAutomaton.h

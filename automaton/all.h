@@ -7,6 +7,7 @@
 #include "ColonDashAutomaton.h"
 #include "CommaAutomaton.h"
 #include "FactsAutomaton.h"
+#include "IdAutomaton.h"
 #include "LeftParenAutomaton.h"
 #include "MultiplyAutomaton.h"
 #include "PeriodAutomaton.h"

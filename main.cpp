@@ -21,6 +21,7 @@ void runTests() {
             new ColonDashAutomaton(),
             new CommaAutomaton(),
             new FactsAutomaton(),
+            new IdAutomaton(),
             new LeftParenAutomaton(),
             new MultiplyAutomaton(),
             new PeriodAutomaton(),
