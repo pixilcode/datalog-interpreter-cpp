@@ -52,6 +52,8 @@ TestResult IdAutomaton::testAutomaton() {
         test::assert(successes[1].finalLine == 1, "id - advanced line (1)"),
         test::assert(successes[2].finalLine == 1, "id - advanced line (2)"),
         test::assert(successes[0].token == Token(TokenType::ID, "abc", 1), "id - token didn't match (0)"),
+        test::assert(successes[1].token == Token(TokenType::ID, "abc123", 1), "id - token didn't match (1)"),
+        test::assert(successes[2].token == Token(TokenType::ID, "abc", 1), "id - token didn't match (2)"),
     });
 
     return test::all({
