@@ -9,6 +9,7 @@
 #include "FactsAutomaton.h"
 #include "IdAutomaton.h"
 #include "LeftParenAutomaton.h"
+#include "LineCommentAutomaton.h"
 #include "MultiplyAutomaton.h"
 #include "PeriodAutomaton.h"
 #include "QueriesAutomaton.h"

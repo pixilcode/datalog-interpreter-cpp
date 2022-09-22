@@ -23,6 +23,7 @@ void runTests() {
             new FactsAutomaton(),
             new IdAutomaton(),
             new LeftParenAutomaton(),
+            new LineCommentAutomaton(),
             new MultiplyAutomaton(),
             new PeriodAutomaton(),
             new QueriesAutomaton(),

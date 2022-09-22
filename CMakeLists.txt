@@ -22,6 +22,8 @@ add_executable(project_1
         automaton/IdAutomaton.cpp
         automaton/LeftParenAutomaton.h
         automaton/LeftParenAutomaton.cpp
+        automaton/LineCommentAutomaton.h
+        automaton/LineCommentAutomaton.cpp
         automaton/MultiplyAutomaton.h
         automaton/MultiplyAutomaton.cpp
         automaton/PeriodAutomaton.h
