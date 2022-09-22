@@ -2,7 +2,7 @@
 #include "LineCommentAutomaton.h"
 
 AutomatonResult LineCommentAutomaton::s0(const string &input, int currIndex, int currLine) {
-    if (currIndex < input.length() && input[currIndex] == '\'') {
+    if (currIndex < input.length() && input[currIndex] == '#') {
         return s1(input, currIndex, currIndex + 1, currLine, currLine);
     } else {
         return sErr();
@@ -10,20 +10,14 @@ AutomatonResult LineCommentAutomaton::s0(const string &input, int currIndex, int
 }
 
 AutomatonResult LineCommentAutomaton::s1(const string &input, int initIndex, int currIndex, int initLine, int currLine) {
-    if (currIndex < input.length() && input[currIndex] == '\'') {
-        if (currIndex + 1 < input.length() && input[currIndex + 1] == '\'') {
-            return s1(input, initIndex, currIndex + 2, initLine, currLine);
-        } else {
-            auto token = Token(TokenType::STRING, input.substr(initIndex, currIndex + 1), initLine);
-            return AutomatonSuccess(token, currIndex + 1, currLine);
-        }
-    } else if (currIndex < input.length() && input[currIndex] == '\n') {
-        return s1(input, initIndex, currIndex + 1, initLine, currLine + 1);
-    } else if (currIndex < input.length()) {
-        return s1(input, initIndex, currIndex + 1, initLine, currLine);
-    } else {
-        auto token = Token(TokenType::UNDEFINED, input.substr(initIndex, currIndex), initLine);
+    if (currIndex >= input.length()) {
+        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);
+    } else if (currIndex < input.length() && input[currIndex] == '\n') {
+        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
+        return AutomatonSuccess(token, currIndex + 1, currLine + 1);
+    } else {
+        return s1(input, initIndex, currIndex + 1, initLine, currLine);
     }
 }
 
@@ -58,19 +52,19 @@ TestResult LineCommentAutomaton::testAutomaton() {
 
     auto correctValueTests = test::all({
         test::assert(successes[0].finalIndex == 1, "line comment - didn't advance index (0)"),
-        test::assert(successes[0].finalIndex == 5, "line comment - didn't advance index (1)"),
-        test::assert(successes[0].finalIndex == 6, "line comment - didn't advance index (2)"),
-        test::assert(successes[0].finalIndex == 6, "line comment - didn't advance index (3)"),
+        test::assert(successes[1].finalIndex == 5, "line comment - didn't advance index (1)"),
+        test::assert(successes[2].finalIndex == 6, "line comment - didn't advance index (2)"),
+        test::assert(successes[3].finalIndex == 6, "line comment - didn't advance index (3)"),
 
         test::assert(successes[0].finalLine == 1, "line comment - advanced line (0)"),
-        test::assert(successes[0].finalLine == 1, "line comment - advanced line (0)"),
-        test::assert(successes[0].finalLine == 2, "line comment - advanced line (0)"),
-        test::assert(successes[0].finalLine == 2, "line comment - advanced line (0)"),
+        test::assert(successes[1].finalLine == 1, "line comment - advanced line (1)"),
+        test::assert(successes[2].finalLine == 2, "line comment - advanced line (2)"),
+        test::assert(successes[3].finalLine == 2, "line comment - advanced line (3)"),
 
         test::assert(successes[0].token == Token(TokenType::COMMENT, "#", 1), "line comment - token didn't match (0)"),
-        test::assert(successes[0].token == Token(TokenType::COMMENT, "# abc", 1), "line 'abc'comment - token didn't match (0)"),
-        test::assert(successes[0].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (0)"),
-        test::assert(successes[0].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (0)"),
+        test::assert(successes[1].token == Token(TokenType::COMMENT, "# abc", 1), "line 'abc'comment - token didn't match (1)"),
+        test::assert(successes[2].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (2)"),
+        test::assert(successes[3].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (3)"),
     });
 
     return test::all({
