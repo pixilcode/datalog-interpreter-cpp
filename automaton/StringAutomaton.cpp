@@ -2,18 +2,27 @@
 #include "StringAutomaton.h"
 
 AutomatonResult StringAutomaton::s0(const string &input, int currIndex, int currLine) {
-    if (currIndex < input.length() && isalpha(input[currIndex])) {
-        return s1(input, currIndex, currIndex + 1, currLine);
+    if (currIndex < input.length() && input[currIndex] == '\'') {
+        return s1(input, currIndex, currIndex + 1, currLine, currLine);
     } else {
         return sErr();
     }
 }
 
-AutomatonResult StringAutomaton::s1(const std::string &input, int initIndex, int currIndex, int currLine) {
-    if (currIndex < input.length() && isalnum(input[currIndex])) {
-        return s1(input, initIndex, currIndex + 1, currLine);
+AutomatonResult StringAutomaton::s1(const std::string &input, int initIndex, int currIndex, int initLine, int currLine) {
+    if (currIndex < input.length() && input[currIndex] == '\'') {
+        if (currIndex + 1 < input.length() && input[currIndex + 1] == '\'') {
+            return s1(input, initIndex, currIndex + 2, initLine, currLine);
+        } else {
+            auto token = Token(TokenType::STRING, input.substr(initIndex, currIndex + 1), initLine);
+            return AutomatonSuccess(token, currIndex + 1, currLine);
+        }
+    } else if (currIndex < input.length() && input[currIndex] == '\n') {
+        return s1(input, initIndex, currIndex + 1, initLine, currLine + 1);
+    } else if (currIndex < input.length()) {
+        return s1(input, initIndex, currIndex + 1, initLine, currLine);
     } else {
-        auto token = Token(TokenType::ID, input.substr(initIndex, currIndex), currLine);
+        auto token = Token(TokenType::UNDEFINED, input.substr(initIndex, currIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);
     }
 }
@@ -71,13 +80,13 @@ TestResult StringAutomaton::testAutomaton() {
         test::assert(successes[5].finalLine == 1, "string - advanced line (5)"),
         test::assert(successes[6].finalLine == 1, "string - advanced line (6)"),
 
-        test::assert(successes[0].token == Token(TokenType::ID, "'abc'", 1), "string - token didn't match (0)"),
-        test::assert(successes[1].token == Token(TokenType::ID, "'abc\n123'", 1), "string - token didn't match (1)"),
-        test::assert(successes[2].token == Token(TokenType::ID, "'can''t'", 1), "string - token didn't match (2)"),
-        test::assert(successes[3].token == Token(TokenType::ID, "''", 1), "string - token didn't match (3)"),
-        test::assert(successes[4].token == Token(TokenType::ID, "'abc'", 1), "string - token didn't match (4)"),
+        test::assert(successes[0].token == Token(TokenType::STRING, "'abc'", 1), "string - token didn't match (0)"),
+        test::assert(successes[1].token == Token(TokenType::STRING, "'abc\n123'", 1), "string - token didn't match (1)"),
+        test::assert(successes[2].token == Token(TokenType::STRING, "'can''t'", 1), "string - token didn't match (2)"),
+        test::assert(successes[3].token == Token(TokenType::STRING, "''", 1), "string - token didn't match (3)"),
+        test::assert(successes[4].token == Token(TokenType::STRING, "'abc'", 1), "string - token didn't match (4)"),
         test::assert(successes[5].token == Token(TokenType::UNDEFINED, "'abc", 1), "string - undefined token didn't match (5)"),
-        test::assert(successes[6].token == Token(TokenType::ID, "'abc'", 1), "string - token didn't match (6)"),
+        test::assert(successes[6].token == Token(TokenType::STRING, "'abc'", 1), "string - token didn't match (6)"),
     });
 
     return test::all({
