@@ -58,8 +58,8 @@ TestResult LineCommentAutomaton::testAutomaton() {
 
         test::assert(successes[0].finalLine == 1, "line comment - advanced line (0)"),
         test::assert(successes[1].finalLine == 1, "line comment - advanced line (1)"),
-        test::assert(successes[2].finalLine == 2, "line comment - advanced line (2)"),
-        test::assert(successes[3].finalLine == 2, "line comment - advanced line (3)"),
+        test::assert(successes[2].finalLine == 2, "line comment - didn't advance line (2)"),
+        test::assert(successes[3].finalLine == 2, "line comment - didn't advance line (3)"),
 
         test::assert(successes[0].token == Token(TokenType::COMMENT, "#", 1), "line comment - token didn't match (0)"),
         test::assert(successes[1].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (1)"),
