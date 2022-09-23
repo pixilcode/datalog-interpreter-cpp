@@ -58,7 +58,7 @@ lexer::Result lexer::nextToken(const string& code, int currIndex, int currLine, 
             // Check to make sure it's the end of file, then return the list of tokens
             if (currIndex >= code.size()) {
                 tokens.emplace_back(TokenType::END_OF_FILE, "", currLine);
-                return tokens;
+                return std::move(tokens);
             } else {
                 // If it isn't actually the end of the file,
                 // it's a bug that the developer needs to fix
