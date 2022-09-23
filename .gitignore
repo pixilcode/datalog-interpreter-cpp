@@ -1,5 +1,6 @@
 # CMake
 /cmake-build-debug/
 
-# Executable
+# Testing
 lab1
+out.txt
