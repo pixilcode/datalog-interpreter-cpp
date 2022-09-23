@@ -20,8 +20,8 @@ enum class TokenType {
     ID,
     STRING,
     COMMENT,
+    UNDEFINED,
     END_OF_FILE,
-    UNDEFINED
 };
 
 struct Token {
@@ -41,6 +41,7 @@ std::string tokenTypeToString(const TokenType& type);
 std::ostream& operator<<(std::ostream& os, TokenType& type);
 std::ostream& operator<<(std::ostream& os, Token& token);
 bool operator==(const Token& rhs, const Token& lhs);
+bool operator<(const Token& rhs, const Token& lhs);
 
 #endif // TOKEN_H
 

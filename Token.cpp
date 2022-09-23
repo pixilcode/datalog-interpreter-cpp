@@ -7,6 +7,17 @@ bool operator==(const Token& rhs, const Token& lhs) {
     rhs.line == lhs.line;
 }
 
+// Determine which token is the "greatest" in terms of which
+// token should be accepted
+bool operator>(const Token& rhs, const Token& lhs) {
+    // RHS is greater if...
+    return
+    // ...the lexeme is longer or...
+    rhs.lexeme.size() > lhs.lexeme.size() ||
+    // ...the token type of RHS is higher on the list than LHS
+    rhs.type < lhs.type
+}
+
 std::string tokenTypeToString(const TokenType& type) {
     switch (type) {
         case TokenType::COMMA:
