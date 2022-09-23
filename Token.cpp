@@ -7,15 +7,15 @@ bool operator==(const Token& rhs, const Token& lhs) {
     rhs.line == lhs.line;
 }
 
-// Determine which token is the "greatest" in terms of which
+// Determine which token is the "least" in terms of which
 // token should be accepted
-bool operator>(const Token& rhs, const Token& lhs) {
-    // RHS is greater if...
+bool operator<(const Token& rhs, const Token& lhs) {
+    // RHS is less  if...
     return
-    // ...the lexeme is longer or...
-    rhs.lexeme.size() > lhs.lexeme.size() ||
-    // ...the token type of RHS is higher on the list than LHS
-    rhs.type < lhs.type;
+    // ...the lexeme is shorter or...
+    rhs.lexeme.size() < lhs.lexeme.size() ||
+    // ...the token type of RHS is lower on the list than LHS
+    rhs.type > lhs.type;
 }
 
 std::string tokenTypeToString(const TokenType& type) {
