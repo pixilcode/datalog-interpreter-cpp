@@ -18,6 +18,8 @@ add_executable(project_1
         automaton/ColonDashAutomaton.cpp
         automaton/CommaAutomaton.h
         automaton/CommaAutomaton.cpp
+        automaton/EofAutomaton.h
+        automaton/EofAutomaton.cpp
         automaton/FactsAutomaton.h
         automaton/FactsAutomaton.cpp
         automaton/IdAutomaton.h
