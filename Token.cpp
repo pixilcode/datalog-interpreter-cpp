@@ -15,7 +15,7 @@ bool operator>(const Token& rhs, const Token& lhs) {
     // ...the lexeme is longer or...
     rhs.lexeme.size() > lhs.lexeme.size() ||
     // ...the token type of RHS is higher on the list than LHS
-    rhs.type < lhs.type
+    rhs.type < lhs.type;
 }
 
 std::string tokenTypeToString(const TokenType& type) {
