@@ -3,8 +3,8 @@
 #include <optional>
 #include <tuple>
 #include <utility>
-#include "Token.h"
-#include "Test.h"
+#include "../Token.h"
+#include "../Test.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ struct AutomatonSuccess {
     int finalLine;
 
     AutomatonSuccess(Token token, int finalIndex, int finalLine):
-            token(move(token)),
+            token(std::move(token)),
             finalIndex(finalIndex),
             finalLine(finalLine) {}
 };
@@ -22,10 +22,9 @@ struct AutomatonSuccess {
 typedef optional<AutomatonSuccess> AutomatonResult;
 
 class Automaton {
-private:
-    virtual AutomatonResult s0(const string& input, int currIndex, int currLine) = 0;
 public:
-    AutomatonResult start(const string& input, int currIndex, int currLine) {
+    virtual AutomatonResult s0(const string& input, size_t currIndex, int currLine) = 0;
+    AutomatonResult start(const string& input, size_t currIndex, int currLine) {
         return s0(input, currIndex, currLine);
     }
 
@@ -34,6 +33,7 @@ public:
     }
 
     virtual TestResult testAutomaton() = 0;
+    virtual ~Automaton() = default;
 };
 
 #endif // AUTOMATON_H

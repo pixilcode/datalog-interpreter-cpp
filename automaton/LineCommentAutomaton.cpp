@@ -1,7 +1,7 @@
 #include <vector>
 #include "LineCommentAutomaton.h"
 
-AutomatonResult LineCommentAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult LineCommentAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '#') {
         return s1(input, currIndex, currIndex + 1, currLine, currLine);
     } else {
@@ -9,7 +9,7 @@ AutomatonResult LineCommentAutomaton::s0(const string &input, int currIndex, int
     }
 }
 
-AutomatonResult LineCommentAutomaton::s1(const string &input, int initIndex, int currIndex, int initLine, int currLine) {
+AutomatonResult LineCommentAutomaton::s1(const string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex >= input.length()) {
         auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);

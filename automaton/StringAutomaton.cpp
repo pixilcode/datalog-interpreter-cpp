@@ -1,7 +1,7 @@
 #include <vector>
 #include "StringAutomaton.h"
 
-AutomatonResult StringAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult StringAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '\'') {
         return s1(input, currIndex, currIndex + 1, currLine, currLine);
     } else {
@@ -9,7 +9,7 @@ AutomatonResult StringAutomaton::s0(const string &input, int currIndex, int curr
     }
 }
 
-AutomatonResult StringAutomaton::s1(const std::string &input, int initIndex, int currIndex, int initLine, int currLine) {
+AutomatonResult StringAutomaton::s1(const std::string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '\'') {
         if (currIndex + 1 < input.length() && input[currIndex + 1] == '\'') {
             return s1(input, initIndex, currIndex + 2, initLine, currLine);

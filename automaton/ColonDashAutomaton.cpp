@@ -1,13 +1,13 @@
 #include <vector>
 #include "ColonDashAutomaton.h"
 
-AutomatonResult ColonDashAutomaton::s0(const string& input, int currIndex, int currLine) {
+AutomatonResult ColonDashAutomaton::s0(const string& input, size_t currIndex, int currLine) {
     return (currIndex < input.length() && input[currIndex] == ':') ?
         s1(input, currIndex, currIndex + 1, currLine) :
         sErr();
 }
 
-AutomatonResult ColonDashAutomaton::s1(const string& input, int initialIndex, int currIndex, int currLine) {
+AutomatonResult ColonDashAutomaton::s1(const string& input, int initialIndex, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '-') {
         auto token = Token(TokenType::COLON_DASH, input.substr(initialIndex, currIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);

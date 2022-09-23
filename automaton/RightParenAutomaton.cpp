@@ -1,6 +1,6 @@
 #include "RightParenAutomaton.h"
 
-AutomatonResult RightParenAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult RightParenAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == ')') {
         auto token = Token(TokenType::RIGHT_PAREN, input.substr(currIndex, 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);

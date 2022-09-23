@@ -8,7 +8,7 @@ using namespace std;
 
 class PeriodAutomaton : public Automaton {
 public:
-    AutomatonResult s0(const string& input, int currIndex, int currLine) override;
+    AutomatonResult s0(const string& input, size_t currIndex, int currLine) override;
     TestResult testAutomaton() override;
 };
 

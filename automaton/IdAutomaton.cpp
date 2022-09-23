@@ -1,7 +1,7 @@
 #include <vector>
 #include "IdAutomaton.h"
 
-AutomatonResult IdAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult IdAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && isalpha(input[currIndex])) {
         return s1(input, currIndex, currIndex + 1, currLine);
     } else {
@@ -9,7 +9,7 @@ AutomatonResult IdAutomaton::s0(const string &input, int currIndex, int currLine
     }
 }
 
-AutomatonResult IdAutomaton::s1(const std::string &input, int initIndex, int currIndex, int currLine) {
+AutomatonResult IdAutomaton::s1(const std::string &input, int initIndex, size_t currIndex, int currLine) {
     if (currIndex < input.length() && isalnum(input[currIndex])) {
         return s1(input, initIndex, currIndex + 1, currLine);
     } else {

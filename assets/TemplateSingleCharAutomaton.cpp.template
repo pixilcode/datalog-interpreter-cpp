@@ -1,6 +1,6 @@
 #include "{{token-name}}Automaton.h"
 
-AutomatonResult {{token-name}}Automaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult {{token-name}}Automaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '{{character}}') {
         auto token = Token(TokenType::{{all-caps-name}}, input.substr(currIndex, 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);

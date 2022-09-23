@@ -1,7 +1,7 @@
 #include <vector>
 #include "BlockCommentAutomaton.h"
 
-AutomatonResult BlockCommentAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult BlockCommentAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (
             currIndex + 1 < input.length() &&
             input[currIndex] == '#' &&
@@ -13,7 +13,7 @@ AutomatonResult BlockCommentAutomaton::s0(const string &input, int currIndex, in
     }
 }
 
-AutomatonResult BlockCommentAutomaton::s1(const string &input, int initIndex, int currIndex, int initLine, int currLine) {
+AutomatonResult BlockCommentAutomaton::s1(const string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
     if (
             currIndex + 1 < input.length() &&
             input[currIndex] == '|' &&

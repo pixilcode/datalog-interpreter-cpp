@@ -1,6 +1,6 @@
 #include "FactsAutomaton.h"
 
-AutomatonResult FactsAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult FactsAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex + 5 <= input.length() && input.substr(currIndex, 5) == "Facts") {
         auto token = Token(TokenType::FACTS, input.substr(currIndex, 5), currLine);
         return AutomatonSuccess(token, currIndex + 5, currLine);

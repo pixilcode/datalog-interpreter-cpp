@@ -8,8 +8,8 @@ using namespace std;
 
 class LineCommentAutomaton : public Automaton {
 public:
-    AutomatonResult s0(const string& input, int currIndex, int currLine) override;
-    AutomatonResult s1(const string& input, int initIndex, int currIndex, int initLine, int currLine);
+    AutomatonResult s0(const string& input, size_t currIndex, int currLine) override;
+    AutomatonResult s1(const string& input, int initIndex, size_t currIndex, int initLine, int currLine);
     TestResult testAutomaton() override;
 };
 

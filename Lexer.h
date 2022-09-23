@@ -13,7 +13,7 @@ namespace lexer {
     Result run(const string& code);
     Result nextToken(
         const string& code,
-        int currIndex,
+        size_t currIndex,
         int currLine,
         vector<Token> tokens,
         const vector<Automaton*>& automatons

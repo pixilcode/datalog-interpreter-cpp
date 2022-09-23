@@ -1,6 +1,6 @@
 #include "QueriesAutomaton.h"
 
-AutomatonResult QueriesAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult QueriesAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex + 7 <= input.length() && input.substr(currIndex, 7) == "Queries") {
         auto token = Token(TokenType::QUERIES, input.substr(currIndex, 7), currLine);
         return AutomatonSuccess(token, currIndex + 7, currLine);

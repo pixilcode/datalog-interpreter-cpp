@@ -1,6 +1,6 @@
 #include "SchemesAutomaton.h"
 
-AutomatonResult SchemesAutomaton::s0(const string &input, int currIndex, int currLine) {
+AutomatonResult SchemesAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex + 7 <= input.length() && input.substr(currIndex, 7) == "Schemes") {
         auto token = Token(TokenType::SCHEMES, input.substr(currIndex, 7), currLine);
         return AutomatonSuccess(token, currIndex + 7, currLine);

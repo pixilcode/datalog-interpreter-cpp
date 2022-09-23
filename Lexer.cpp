@@ -30,7 +30,7 @@ lexer::Result lexer::run(const string& code) {
     return result;
 }
 
-lexer::Result lexer::nextToken(const string& code, int currIndex, int currLine, vector<Token> tokens, const vector<Automaton*>& automatons) {
+lexer::Result lexer::nextToken(const string& code, size_t currIndex, int currLine, vector<Token> tokens, const vector<Automaton*>& automatons) {
     // Skip whitespace
     if(currIndex < code.size() && isspace(code[currIndex])) {
         int nextLine = (code[currIndex] == '\n') ? currLine + 1 : currLine;
@@ -38,7 +38,7 @@ lexer::Result lexer::nextToken(const string& code, int currIndex, int currLine, 
     } else {
         // Run each automaton
         vector<AutomatonResult> autoResults(automatons.size(), nullopt);
-        for (int i = 0; i < automatons.size(); i++) {
+        for (size_t i = 0; i < automatons.size(); i++) {
             autoResults[i] = automatons[i]->start(code, currIndex, currLine);
         }
 

@@ -11,4 +11,4 @@ run:
 	rm $(tests)/out.txt
 
 compile:
-	g++ -Wall -Werror -std=c++17 -g *.cpp -o lab$(NUM)
+	g++ -Wall -Werror -std=c++17 -g *.cpp automaton/*.cpp -o lab$(NUM)
