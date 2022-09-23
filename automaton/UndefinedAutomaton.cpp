@@ -3,7 +3,7 @@
 
 AutomatonResult UndefinedAutomaton::s0(const string &input, int currIndex, int currLine) {
     if (currIndex < input.length()) {
-        auto token = Token(TokenType::UNDEFINED, input.substr(currIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::UNDEFINED, input.substr(currIndex, 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
