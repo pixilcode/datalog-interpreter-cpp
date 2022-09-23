@@ -11,7 +11,6 @@ lexer::Result lexer::run(const string& code) {
             new ColonAutomaton(),
             new ColonDashAutomaton(),
             new CommaAutomaton(),
-            new EofAutomaton(),
             new FactsAutomaton(),
             new IdAutomaton(),
             new LeftParenAutomaton(),
