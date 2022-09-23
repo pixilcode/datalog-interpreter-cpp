@@ -1,7 +1,8 @@
 #include <cstdlib>
 #include <iostream>
-#include <cstring>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include "automaton/all.h" // include all automatons
 #include "Lexer.h"
 
@@ -20,11 +21,24 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    string datalogFile = argv[1];
+    // Read in the file
+    string fileLoc = argv[1];
+    ifstream inputFile(fileLoc);
 
-    auto result = lexer::run("Facts? : \n :-");
+    if (inputFile.fail()) {
+        cout << "ERROR: couldn't read file '" << fileLoc << "'" << endl;
+        return 1;
+    }
 
+    stringstream contents;
+    contents << inputFile.rdbuf();
+
+    // Lex the inputs
+    auto result = lexer::run(contents.str());
+
+    // Print out the resulting tokens
     for (auto token : result) cout << token << endl;
+    cout << "Total Tokens = " << result.size();
 
     return 0;
 }

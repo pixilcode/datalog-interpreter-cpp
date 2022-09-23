@@ -13,7 +13,7 @@ AutomatonResult IdAutomaton::s1(const std::string &input, size_t initIndex, size
     if (currIndex < input.length() && isalnum(input[currIndex])) {
         return s1(input, initIndex, currIndex + 1, currLine);
     } else {
-        auto token = Token(TokenType::ID, input.substr(initIndex, currIndex), currLine);
+        auto token = Token(TokenType::ID, input.substr(initIndex, currIndex - initIndex), currLine);
         return AutomatonSuccess(token, currIndex, currLine);
     }
 }

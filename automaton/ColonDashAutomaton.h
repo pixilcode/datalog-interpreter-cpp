@@ -5,11 +5,9 @@
 #include "Automaton.h"
 
 class ColonDashAutomaton : public Automaton {
-private:
-    static AutomatonResult s1(const string& input, int initialIndex, size_t currIndex, int currLine);
-
 public:
     AutomatonResult s0(const string& input, size_t currIndex, int currLine) override;
+    AutomatonResult s1(const string &input, size_t initialIndex, size_t currIndex, int currLine);
     TestResult testAutomaton() override;
 };
 

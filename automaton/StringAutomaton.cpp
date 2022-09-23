@@ -14,7 +14,7 @@ AutomatonResult StringAutomaton::s1(const std::string &input, size_t initIndex, 
         if (currIndex + 1 < input.length() && input[currIndex + 1] == '\'') {
             return s1(input, initIndex, currIndex + 2, initLine, currLine);
         } else {
-            auto token = Token(TokenType::STRING, input.substr(initIndex, currIndex + 1), initLine);
+            auto token = Token(TokenType::STRING, input.substr(initIndex, currIndex - initIndex + 1), initLine);
             return AutomatonSuccess(token, currIndex + 1, currLine);
         }
     } else if (currIndex < input.length() && input[currIndex] == '\n') {

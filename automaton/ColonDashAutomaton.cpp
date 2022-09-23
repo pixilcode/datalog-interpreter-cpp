@@ -7,9 +7,9 @@ AutomatonResult ColonDashAutomaton::s0(const string& input, size_t currIndex, in
         sErr();
 }
 
-AutomatonResult ColonDashAutomaton::s1(const string& input, int initialIndex, size_t currIndex, int currLine) {
+AutomatonResult ColonDashAutomaton::s1(const string& input, size_t initialIndex, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '-') {
-        auto token = Token(TokenType::COLON_DASH, input.substr(initialIndex, currIndex + 1), currLine);
+        auto token = Token(TokenType::COLON_DASH, input.substr(initialIndex, currIndex - initialIndex + 1), currLine);
         return AutomatonSuccess(token, currIndex + 1, currLine);
     } else {
         return sErr();
