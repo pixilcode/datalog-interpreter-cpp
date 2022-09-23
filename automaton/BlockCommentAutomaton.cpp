@@ -13,7 +13,7 @@ AutomatonResult BlockCommentAutomaton::s0(const string &input, size_t currIndex,
     }
 }
 
-AutomatonResult BlockCommentAutomaton::s1(const string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
+AutomatonResult BlockCommentAutomaton::s1(const string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
     if (
             currIndex + 1 < input.length() &&
             input[currIndex] == '|' &&

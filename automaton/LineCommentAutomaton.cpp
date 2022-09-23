@@ -9,7 +9,7 @@ AutomatonResult LineCommentAutomaton::s0(const string &input, size_t currIndex, 
     }
 }
 
-AutomatonResult LineCommentAutomaton::s1(const string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
+AutomatonResult LineCommentAutomaton::s1(const string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex >= input.length()) {
         auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);

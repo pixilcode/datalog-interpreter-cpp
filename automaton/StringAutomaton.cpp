@@ -9,7 +9,7 @@ AutomatonResult StringAutomaton::s0(const string &input, size_t currIndex, int c
     }
 }
 
-AutomatonResult StringAutomaton::s1(const std::string &input, int initIndex, size_t currIndex, int initLine, int currLine) {
+AutomatonResult StringAutomaton::s1(const std::string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '\'') {
         if (currIndex + 1 < input.length() && input[currIndex + 1] == '\'') {
             return s1(input, initIndex, currIndex + 2, initLine, currLine);

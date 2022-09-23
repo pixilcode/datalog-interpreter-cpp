@@ -9,7 +9,7 @@ AutomatonResult IdAutomaton::s0(const string &input, size_t currIndex, int currL
     }
 }
 
-AutomatonResult IdAutomaton::s1(const std::string &input, int initIndex, size_t currIndex, int currLine) {
+AutomatonResult IdAutomaton::s1(const std::string &input, size_t initIndex, size_t currIndex, int currLine) {
     if (currIndex < input.length() && isalnum(input[currIndex])) {
         return s1(input, initIndex, currIndex + 1, currLine);
     } else {

@@ -10,10 +10,10 @@ using namespace std;
 
 struct AutomatonSuccess {
     Token token;
-    int finalIndex;
+    size_t finalIndex;
     int finalLine;
 
-    AutomatonSuccess(Token token, int finalIndex, int finalLine):
+    AutomatonSuccess(Token token, size_t finalIndex, int finalLine):
             token(std::move(token)),
             finalIndex(finalIndex),
             finalLine(finalLine) {}
