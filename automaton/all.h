@@ -19,5 +19,6 @@
 #include "RulesAutomaton.h"
 #include "SchemesAutomaton.h"
 #include "StringAutomaton.h"
+#include "UndefinedAutomaton.h"
 
 #endif //PROJECT_1_ALL_H
