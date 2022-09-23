@@ -21,7 +21,6 @@ void runTests() {
             new ColonAutomaton(),
             new ColonDashAutomaton(),
             new CommaAutomaton(),
-            new EofAutomaton(),
             new FactsAutomaton(),
             new IdAutomaton(),
             new LeftParenAutomaton(),
@@ -37,7 +36,7 @@ void runTests() {
             new UndefinedAutomaton(),
     };
 
-    cout << "running tests..." << endl;
+    cout << "running automaton tests..." << endl;
     for(auto automaton : automatons) {
         auto testResult = automaton->testAutomaton();
         if (!test::is_ok(testResult))
