@@ -3,7 +3,8 @@
 
 AutomatonResult LineCommentAutomaton::s0(const string &input, size_t currIndex, int currLine) {
     if (currIndex < input.length() && input[currIndex] == '#') {
-        return s1(input, currIndex, currIndex + 1, currLine, currLine);
+        if (currIndex + 1 < input.length() && input[currIndex + 1] == '|') return sErr();
+        else return s1(input, currIndex, currIndex + 1, currLine, currLine);
     } else {
         return sErr();
     }
@@ -11,10 +12,10 @@ AutomatonResult LineCommentAutomaton::s0(const string &input, size_t currIndex, 
 
 AutomatonResult LineCommentAutomaton::s1(const string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex >= input.length()) {
-        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
+        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex - initIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);
     } else if (currIndex < input.length() && input[currIndex] == '\n') {
-        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex), initLine);
+        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex - initIndex), initLine);
         return AutomatonSuccess(token, currIndex + 1, currLine + 1);
     } else {
         return s1(input, initIndex, currIndex + 1, initLine, currLine);
@@ -30,6 +31,7 @@ TestResult LineCommentAutomaton::testAutomaton() {
             lineComment.start("# abc\n new line", 0, 1),
             lineComment.start("", 0, 1),
             lineComment.start("abc", 0, 1),
+            lineComment.start("#| this fails", 0, 1),
     };
 
     auto hasValueTests = test::all({
@@ -39,6 +41,7 @@ TestResult LineCommentAutomaton::testAutomaton() {
         test::assert(results[3].has_value(), "line comment - didn't match line comment (3)"),
         test::assert(!results[4].has_value(), "line comment - matched empty string"),
         test::assert(!results[5].has_value(), "line comment - matched non comment"),
+        test::assert(!results[6].has_value(), "line comment - matched block comment"),
     });
 
     if (!test::is_ok(hasValueTests)) return hasValueTests;

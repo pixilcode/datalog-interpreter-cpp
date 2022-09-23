@@ -19,13 +19,13 @@ AutomatonResult BlockCommentAutomaton::s1(const string &input, size_t initIndex,
             input[currIndex] == '|' &&
             input[currIndex + 1] == '#'
     ) {
-        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex + 2), initLine);
+        auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex - initIndex + 2), initLine);
         return AutomatonSuccess(token, currIndex + 2, currLine);
     } else if(currIndex < input.length()) {
         int nextLine = (input[currIndex] == '\n') ? currLine + 1 : currLine;
         return s1(input, initIndex, currIndex + 1, initLine, nextLine);
     } else {
-        auto token = Token(TokenType::UNDEFINED, input.substr(initIndex, currIndex), initLine);
+        auto token = Token(TokenType::UNDEFINED, input.substr(initIndex, currIndex - initIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);
     }
 }

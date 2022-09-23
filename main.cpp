@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 
     // Print out the resulting tokens
     for (auto token : result) cout << token << endl;
-    cout << "Total Tokens = " << result.size();
+    cout << "Total Tokens = " << result.size() << endl;
 
     return 0;
 }
