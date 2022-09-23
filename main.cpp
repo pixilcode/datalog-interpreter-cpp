@@ -9,8 +9,22 @@ void runTests();
 
 int main(int argc, char** argv) {
     // Debug
-    if (strcmp(std::getenv("DEBUG"), "true") == 0)
+    if (std::getenv("DEBUG") != nullptr) {
         runTests();
+        return 0;
+    }
+
+    // Check for correct number of args
+    if (argc != 2) {
+        cout << "ERROR: must provide datalog file" << endl;
+        return 1;
+    }
+
+    string datalogFile = argv[1];
+
+    auto result = lexer::run("Facts? : \n :-");
+
+    for (auto token : result) cout << token << endl;
 
     return 0;
 }
