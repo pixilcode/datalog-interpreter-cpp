@@ -3,6 +3,7 @@
 #include <cstring>
 #include <vector>
 #include "automaton/all.h" // include all automatons
+#include "Lexer.h"
 
 void runTests();
 
