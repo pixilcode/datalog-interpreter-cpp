@@ -10,6 +10,8 @@ add_executable(project_1
         automaton/Automaton.h
         automaton/AddAutomaton.h
         automaton/AddAutomaton.cpp
+        automaton/BlockCommentAutomaton.h
+        automaton/BlockCommentAutomaton.cpp
         automaton/ColonAutomaton.h
         automaton/ColonAutomaton.cpp
         automaton/ColonDashAutomaton.h

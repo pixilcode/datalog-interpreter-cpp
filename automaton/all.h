@@ -3,6 +3,7 @@
 
 // Include for easier importation of all automatons
 #include "AddAutomaton.h"
+#include "BlockCommentAutomaton.h"
 #include "ColonAutomaton.h"
 #include "ColonDashAutomaton.h"
 #include "CommaAutomaton.h"

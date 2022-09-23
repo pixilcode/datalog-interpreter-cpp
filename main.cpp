@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
 void runTests() {
     vector<Automaton*> automatons = {
             new AddAutomaton(),
+            new BlockCommentAutomaton(),
             new ColonAutomaton(),
             new ColonDashAutomaton(),
             new CommaAutomaton(),
