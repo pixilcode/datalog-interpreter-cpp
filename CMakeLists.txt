@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.23)
-project(project_1)
+project(project_2)
 
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(.)
 
-add_executable(project_1
+add_executable(project_2
         automaton/all.h
         automaton/Automaton.h
         automaton/AddAutomaton.h
