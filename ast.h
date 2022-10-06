@@ -28,10 +28,10 @@ namespace ast {
         explicit Parameter(Id id): param(id) {}
         explicit Parameter(String string_): param(string_) {}
 
-        bool isId() { return holds_alternative<Id>(param); }
+        [[nodiscard]] bool isId() const { return holds_alternative<Id>(param); }
         Id toId() { return get<Id>(param); }
 
-        bool isString() { return holds_alternative<String>(param); }
+        [[nodiscard]] bool isString() const { return holds_alternative<String>(param); }
         String toString() { return get<String>(param); }
     };
 
