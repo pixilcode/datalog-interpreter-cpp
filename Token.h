@@ -34,7 +34,8 @@ struct Token {
         lexeme(std::move(lexeme)),
         line(line) {}
 
-    std::string toString() const;
+    [[nodiscard]] bool matches(TokenType tType) const;
+    [[nodiscard]] std::string toString() const;
 };
 
 std::string tokenTypeToString(const TokenType& type);

@@ -72,6 +72,10 @@ std::string Token::toString() const {
             ")";
 }
 
+bool Token::matches(TokenType tType) const {
+    return type == tType;
+}
+
 std::ostream& operator<<(std::ostream& os, Token& token) {
     os << token.toString();
     return os;
