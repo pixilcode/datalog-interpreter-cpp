@@ -45,4 +45,4 @@ add_executable(project_2
         automaton/UndefinedAutomaton.h
         automaton/UndefinedAutomaton.cpp
         main.cpp
-        Token.h Token.cpp Test.h Test.cpp Lexer.cpp Lexer.h ast.h parser.h)
+        Token.h Token.cpp Test.h Test.cpp Lexer.cpp Lexer.h ast.h parser.h parser.cpp)

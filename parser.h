@@ -2,6 +2,8 @@
 
 #include <utility>
 #include <variant>
+#include <optional>
+#include <stdexcept>
 #include "ast.h"
 #include "Token.h"
 
@@ -21,50 +23,53 @@ namespace parser {
         }
 
         [[nodiscard]] Token currToken() const {
+            if (curr > tokens.size()) throw runtime_error("attempted to access token out of bounds");
             return tokens.at(curr);
         }
     };
 
-    typedef pair<string, Token> Error;
-    template<typename T>
-    using ParseSuccess = pair<ParseInput, T>;
+    struct Error : exception {
+        string message;
+        Token token;
 
-    template<typename T>
-    struct Result {
-        variant<ParseSuccess<T>, Error> result;
-
-        explicit Result(ParseSuccess<T> value): result(value) {}
-        explicit Result(Error error): result(error) {}
-
-        static Result<T> ok(ParseSuccess<T> value) { return Result(value); }
-        static Result<T> error(string message, Token token) { return Result({message, token}); }
-
-        bool isOk() { return holds_alternative<ParseSuccess<T>>(result); }
-        bool isError() { return holds_alternative<Error>(result); }
-
-        ParseSuccess<T> getOk() { return get<ParseSuccess<T>>(result); }
-        Error getError() { return get<Error>(result); }
+        Error(string message, Token token): message(std::move(message)), token(std::move(token)) {}
     };
 
-    Result<Program> parse(vector<Token> tokens);
-    Result<Program> program(ParseInput input);
+    template<typename T>
+    using Result = pair<ParseInput, T>;
 
-    Result<vector<Scheme>> schemes(ParseInput input);
-    Result<vector<Fact>> facts(ParseInput input);
-    Result<vector<Rule>> rules(ParseInput input);
-    Result<vector<Query>> queries(ParseInput input);
+    Result<Program> parse(const vector<Token>& tokens);
+    Result<Program> program(const ParseInput& input);
 
-    Result<Scheme> scheme(ParseInput input);
-    Result<Fact> fact(ParseInput input);
-    Result<Rule> rule(ParseInput input);
-    Result<Query> query(ParseInput input);
+    Result<vector<Scheme>> schemes(const ParseInput& input);
+    Result<vector<Fact>> facts(const ParseInput& input);
+    Result<vector<Rule>> rules(const ParseInput& input);
+    Result<vector<Query>> queries(const ParseInput& input);
 
-    Result<HeadPredicate> headPredicate(ParseInput input);
-    Result<Predicate> predicate(ParseInput input);
+    Result<vector<Scheme>> schemeList(const ParseInput& input, vector<Scheme> schemesList = {});
+    Result<vector<Fact>> factList(const ParseInput& input, vector<Fact> factsList = {});
+    Result<vector<Rule>> ruleList(const ParseInput& input, vector<Rule> rulesList = {});
+    Result<vector<Query>> queryList(const ParseInput& input, vector<Query> queriesList = {});
 
-    Result<Id> id(ParseInput input);
-    Result<String> string(ParseInput input);
-    Result<Parameter> parameter(ParseInput input);
+    Result<Scheme> scheme(const ParseInput& input);
+    Result<Fact> fact(const ParseInput& input);
+    Result<Rule> rule(const ParseInput& input);
+    Result<Query> query(const ParseInput& input);
+
+    Result<HeadPredicate> headPredicate(const ParseInput& input);
+    Result<Predicate> predicate(const ParseInput& input);
+
+    Result<vector<Predicate>> predicateList(const ParseInput& input, vector<Predicate> predicatesList = {});
+    Result<vector<Parameter>> parameterList(const ParseInput& input, vector<Parameter> parametersList = {});
+    Result<vector<Id>> idList(const ParseInput& input, vector<Id> idsList = {});
+    Result<vector<String>> stringList(const ParseInput& input, vector<String> stringsList = {});
+
+    Result<Id> id(const ParseInput& input);
+    Result<String> string(const ParseInput& input);
+    Result<Parameter> parameter(const ParseInput& input);
+
+    pair<ParseInput, Token> matchToken(const ParseInput& token, TokenType tType);
+    optional<pair<ParseInput, Token>> tryToken(const ParseInput& input, TokenType tType);
 }
 
 #define PROJECT_2_PARSER_H
