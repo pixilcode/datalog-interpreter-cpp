@@ -59,7 +59,7 @@ namespace parser {
             auto schemeResult = scheme(input);
             schemesList.push_back(schemeResult.second);
             return schemeList(schemeResult.first, schemesList);
-        } catch(Error& e) {
+        } catch(RecoverableError& e) {
             if (e.message != "Expected ID") throw e;
             if (schemesList.empty()) throw Error("Must have at least one scheme", input.currToken());
             return {input, schemesList};
@@ -70,7 +70,7 @@ namespace parser {
             auto factResult = fact(input);
             factsList.push_back(factResult.second);
             return factList(factResult.first, factsList);
-        } catch(Error& e) {
+        } catch(RecoverableError& e) {
             if (e.message != "Expected ID") throw e;
             return {input, factsList};
         }
@@ -80,7 +80,7 @@ namespace parser {
             auto ruleResult = rule(input);
             rulesList.push_back(ruleResult.second);
             return ruleList(ruleResult.first, rulesList);
-        } catch(Error& e) {
+        } catch(RecoverableError& e) {
             if (e.message != "Expected ID") throw e;
             return {input, rulesList};
         }
@@ -90,7 +90,7 @@ namespace parser {
             auto queryResult = query(input);
             queriesList.push_back(queryResult.second);
             return queryList(queryResult.first, queriesList);
-        } catch(Error& e) {
+        } catch(RecoverableError& e) {
             if (e.message != "Expected ID") throw e;
             if (queriesList.empty()) throw Error("Must have at least one query", input.currToken());
             return {input, queriesList};
@@ -98,7 +98,7 @@ namespace parser {
     }
 
     Result<Scheme> scheme(const ParseInput& input) {
-        auto nameResult = id(input);
+        auto nameResult = id(input, true);
         auto nextInput =
                 matchToken(nameResult.first, TokenType::LEFT_PAREN).first;
         auto paramsResult = idList(nextInput);
@@ -107,7 +107,7 @@ namespace parser {
         return Result<Scheme>({nextInput, Scheme(nameResult.second, paramsResult.second)});
     }
     Result<Fact> fact(const ParseInput& input) {
-        auto nameResult = id(input);
+        auto nameResult = id(input, true);
         auto nextInput =
                 matchToken(nameResult.first, TokenType::LEFT_PAREN).first;
         auto argsResult = stringList(nextInput);
@@ -126,14 +126,14 @@ namespace parser {
         return Result<Rule>({nextInput, Rule(headResults.second, predicatesResult.second)});
     }
     Result<Query> query(const ParseInput& input) {
-        auto predicatesResult = predicate(input);
+        auto predicatesResult = predicate(input, true);
         auto nextInput = matchToken(predicatesResult.first, TokenType::Q_MARK).first;
 
         return Result<Query>({nextInput, Query(predicatesResult.second)});
     }
 
     Result<HeadPredicate> headPredicate(const ParseInput& input) {
-        auto nameResult = id(input);
+        auto nameResult = id(input, true);
         auto nextInput =
                 matchToken(nameResult.first, TokenType::LEFT_PAREN).first;
         auto idsList = idList(nextInput);
@@ -141,8 +141,8 @@ namespace parser {
 
         return Result<HeadPredicate>({nextInput, HeadPredicate(nameResult.second, idsList.second)});
     }
-    Result<Predicate> predicate(const ParseInput& input) {
-        auto nameResult = id(input);
+    Result<Predicate> predicate(const ParseInput& input, bool recoverable) {
+        auto nameResult = id(input, recoverable);
         auto nextInput =
                 matchToken(nameResult.first, TokenType::LEFT_PAREN).first;
         auto idsList = parameterList(nextInput);
@@ -188,9 +188,17 @@ namespace parser {
         else return stringList(commaResult->first, stringsList);
     }
 
-    Result<Id> id(const ParseInput& input) {
-        auto idResult = matchToken(input, TokenType::ID);
-        return Result<Id>({idResult.first, Id(idResult.second.lexeme)});
+    Result<Id> id(const ParseInput& input, bool recoverable) {
+        try {
+            auto idResult = matchToken(input, TokenType::ID);
+            return Result<Id>({idResult.first, Id(idResult.second.lexeme)});
+        } catch (Error& e) {
+            if (recoverable) {
+                throw RecoverableError(e.message, e.token);
+            } else {
+                throw e;
+            }
+        }
     }
     Result<String> string(const ParseInput& input) {
         auto stringResult = matchToken(input, TokenType::STRING);

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <vector>
@@ -22,6 +23,7 @@ int main(int argc, char** argv) {
         cout << "ERROR: must provide datalog file" << endl;
         return 1;
     } else if (argc != 2) {
+        cout << "Exiting..." << endl;
         return 0;
     }
 
@@ -40,11 +42,19 @@ int main(int argc, char** argv) {
     // Lex the inputs
     auto result = lexer::run(contents.str());
 
+    // Filter out comments
+    vector<Token> filtered;
+    for (Token token : result) {
+        if (token.type != TokenType::COMMENT)
+            filtered.push_back(token);
+    }
+
     try {
         // Parse the inputs
-        auto parseAst = parser::parse(result);
+        auto parseAst = parser::parse(filtered);
         cout << "Success!" << endl;
         cout << parseAst.second.toString() << endl;
+        cout << endl;
     } catch(parser::Error& error) {
         // Handle the error
         cout << "Failure!" << endl;

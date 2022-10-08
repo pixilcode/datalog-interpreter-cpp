@@ -35,6 +35,10 @@ namespace parser {
         Error(string message, Token token): message(std::move(message)), token(std::move(token)) {}
     };
 
+    struct RecoverableError : Error {
+        RecoverableError(string message, Token token): Error(std::move(message), std::move(token)) {}
+    };
+
     template<typename T>
     using Result = pair<ParseInput, T>;
 
@@ -57,14 +61,14 @@ namespace parser {
     Result<Query> query(const ParseInput& input);
 
     Result<HeadPredicate> headPredicate(const ParseInput& input);
-    Result<Predicate> predicate(const ParseInput& input);
+    Result<Predicate> predicate(const ParseInput& input, bool recoverable = false);
 
     Result<vector<Predicate>> predicateList(const ParseInput& input, vector<Predicate> predicatesList = {});
     Result<vector<Parameter>> parameterList(const ParseInput& input, vector<Parameter> parametersList = {});
     Result<vector<Id>> idList(const ParseInput& input, vector<Id> idsList = {});
     Result<vector<String>> stringList(const ParseInput& input, vector<String> stringsList = {});
 
-    Result<Id> id(const ParseInput& input);
+    Result<Id> id(const ParseInput& input, bool recoverable = false);
     Result<String> string(const ParseInput& input);
     Result<Parameter> parameter(const ParseInput& input);
 
