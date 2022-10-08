@@ -3,7 +3,7 @@
 string ast::paramsToString(vector<ast::Parameter> params) {
     ostringstream out;
     out << params[0].toString();
-    for (int i = 1; i < params.size(); i++) {
+    for (size_t i = 1; i < params.size(); i++) {
         out << "," << params[i].toString();
     }
     return out.str();
@@ -12,7 +12,7 @@ string ast::paramsToString(vector<ast::Parameter> params) {
 string ast::stringsToString(vector<ast::String> strings) {
     ostringstream out;
     out << strings[0].toString();
-    for (int i = 1; i < strings.size(); i++) {
+    for (size_t i = 1; i < strings.size(); i++) {
         out << "," << strings[i].toString();
     }
     return out.str();
@@ -21,7 +21,7 @@ string ast::stringsToString(vector<ast::String> strings) {
 string ast::idsToString(vector<ast::Id> ids) {
     ostringstream out;
     out << ids[0].toString();
-    for (int i = 1; i < ids.size(); i++) {
+    for (size_t i = 1; i < ids.size(); i++) {
         out << "," << ids[i].toString();
     }
     return out.str();
@@ -30,7 +30,7 @@ string ast::idsToString(vector<ast::Id> ids) {
 string ast::predicatesToString(vector<ast::Predicate> predicates) {
     ostringstream out;
     out << predicates[0].toString();
-    for (int i = 1; i < predicates.size(); i++) {
+    for (size_t i = 1; i < predicates.size(); i++) {
         out << "," << predicates[i].toString();
     }
     return out.str();
