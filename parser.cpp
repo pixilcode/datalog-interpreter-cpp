@@ -20,7 +20,7 @@ namespace parser {
         auto queriesResult = queries(nextInput);
         nextInput = queriesResult.first;
 
-        nextInput = matchToken(nextInput, TokenType::END_OF_FILE);
+        nextInput = matchToken(nextInput, TokenType::END_OF_FILE).first;
         auto finalSchemes = schemesResult.second;
         auto finalFacts = factsResult.second;
         auto finalRules = rulesResult.second;
@@ -60,6 +60,7 @@ namespace parser {
             schemesList.push_back(schemeResult.second);
             return schemeList(schemeResult.first, schemesList);
         } catch(Error& e) {
+            if (e.message != "Expected ID") throw e;
             if (schemesList.empty()) throw Error("Must have at least one scheme", input.currToken());
             return {input, schemesList};
         }
@@ -70,6 +71,7 @@ namespace parser {
             factsList.push_back(factResult.second);
             return factList(factResult.first, factsList);
         } catch(Error& e) {
+            if (e.message != "Expected ID") throw e;
             return {input, factsList};
         }
     }
@@ -79,6 +81,7 @@ namespace parser {
             rulesList.push_back(ruleResult.second);
             return ruleList(ruleResult.first, rulesList);
         } catch(Error& e) {
+            if (e.message != "Expected ID") throw e;
             return {input, rulesList};
         }
     }
@@ -88,6 +91,7 @@ namespace parser {
             queriesList.push_back(queryResult.second);
             return queryList(queryResult.first, queriesList);
         } catch(Error& e) {
+            if (e.message != "Expected ID") throw e;
             if (queriesList.empty()) throw Error("Must have at least one query", input.currToken());
             return {input, queriesList};
         }
@@ -108,15 +112,16 @@ namespace parser {
                 matchToken(nameResult.first, TokenType::LEFT_PAREN).first;
         auto argsResult = stringList(nextInput);
         nextInput = matchToken(argsResult.first, TokenType::RIGHT_PAREN).first;
+        nextInput = matchToken(nextInput, TokenType::PERIOD).first;
 
         return Result<Fact>({nextInput, Fact(nameResult.second, argsResult.second)});
     }
     Result<Rule> rule(const ParseInput& input) {
         auto headResults = headPredicate(input);
         auto nextInput =
-                matchToken(headResults.first, TokenType::LEFT_PAREN).first;
+                matchToken(headResults.first, TokenType::COLON_DASH).first;
         auto predicatesResult = predicateList(nextInput);
-        nextInput = matchToken(predicatesResult.first, TokenType::RIGHT_PAREN).first;
+        nextInput = matchToken(predicatesResult.first, TokenType::PERIOD).first;
 
         return Result<Rule>({nextInput, Rule(headResults.second, predicatesResult.second)});
     }
@@ -152,7 +157,7 @@ namespace parser {
         auto commaResult = tryToken(predicatesResult.first, TokenType::COMMA);
         if (!commaResult.has_value())
             if (predicatesList.empty()) throw Error("Must have at least one predicate", predicatesResult.first.currToken());
-            else return {input, predicatesList};
+            else return {predicatesResult.first, predicatesList};
         else return predicateList(commaResult->first, predicatesList);
     }
     Result<vector<Parameter>> parameterList(const ParseInput& input, vector<Parameter> parametersList) {
@@ -161,7 +166,7 @@ namespace parser {
         auto commaResult = tryToken(parametersResult.first, TokenType::COMMA);
         if (!commaResult.has_value())
             if (parametersList.empty()) throw Error("Must have at least one parameter", parametersResult.first.currToken());
-            else return {input, parametersList};
+            else return {parametersResult.first, parametersList};
         else return parameterList(commaResult->first, parametersList);
     }
     Result<vector<Id>> idList(const ParseInput& input, vector<Id> idsList) {
@@ -170,7 +175,7 @@ namespace parser {
         auto commaResult = tryToken(idResult.first, TokenType::COMMA);
         if (!commaResult.has_value())
             if (idsList.empty()) throw Error("Must have at least one ID", idResult.first.currToken());
-            else return {input, idsList};
+            else return {idResult.first, idsList};
         else return idList(commaResult->first, idsList);
     }
     Result<vector<String>> stringList(const ParseInput& input, vector<String> stringsList) {
@@ -179,7 +184,7 @@ namespace parser {
         auto commaResult = tryToken(stringResult.first, TokenType::COMMA);
         if (!commaResult.has_value())
             if (stringsList.empty()) throw Error("Must have at least one string", stringResult.first.currToken());
-            else return {input, stringsList};
+            else return {stringResult.first, stringsList};
         else return stringList(commaResult->first, stringsList);
     }
 

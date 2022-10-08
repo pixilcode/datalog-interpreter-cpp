@@ -5,20 +5,24 @@
 #include <sstream>
 #include "automaton/all.h" // include all automatons
 #include "Lexer.h"
+#include "parser.h"
 
 void runTests();
 
 int main(int argc, char** argv) {
+    bool debug = std::getenv("DEBUG") != nullptr;
+
     // Debug
-    if (std::getenv("DEBUG") != nullptr) {
+    if (debug) {
         runTests();
-        return 0;
     }
 
     // Check for correct number of args
-    if (argc != 2) {
+    if (argc != 2 && !debug) {
         cout << "ERROR: must provide datalog file" << endl;
         return 1;
+    } else if (argc != 2) {
+        return 0;
     }
 
     // Read in the file
@@ -36,9 +40,16 @@ int main(int argc, char** argv) {
     // Lex the inputs
     auto result = lexer::run(contents.str());
 
-    // Print out the resulting tokens
-    for (auto token : result) cout << token << endl;
-    cout << "Total Tokens = " << result.size() << endl;
+    try {
+        // Parse the inputs
+        auto parseAst = parser::parse(result);
+        cout << parseAst.second.toString() << endl;
+    } catch(parser::Error& error) {
+        // Handle the error
+        cout << "Failure!" << endl;
+        if (debug) cout << "  " << error.message << endl;
+        cout << "  " << error.token << endl;
+    }
 
     return 0;
 }
