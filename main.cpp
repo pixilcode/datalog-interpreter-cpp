@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <sstream>
 #include "automaton/all.h" // include all automatons
 #include "Lexer.h"
 #include "parser.h"
@@ -44,7 +43,7 @@ int main(int argc, char** argv) {
 
     // Filter out comments
     vector<Token> filtered;
-    for (Token token : result) {
+    for (const Token& token : result) {
         if (token.type != TokenType::COMMENT)
             filtered.push_back(token);
     }
