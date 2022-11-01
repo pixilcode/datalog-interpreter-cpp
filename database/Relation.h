@@ -18,11 +18,13 @@ public:
         header(std::move(header)),
         tuples(std::move(tuples)) {}
 
-    Relation selectConstant(size_t index, const string& constant);
-    Relation selectCompare(size_t indexA, size_t indexB);
-    Relation project(vector<size_t> indices);
-    Relation rename(vector<string> attributes);
+    [[nodiscard]] Relation selectConstant(size_t index, const string& constant) const;
+    [[nodiscard]] Relation selectCompare(size_t indexA, size_t indexB) const;
+    [[nodiscard]] Relation project(const vector<size_t>& indices) const;
+    [[nodiscard]] Relation rename(const vector<string>& attributes) const;
 };
 
+template<typename T>
+vector<T> pickIndices(const vector<size_t>& indices, const vector<T>& source);
 
 #endif //PROJECT_2_RELATION_H

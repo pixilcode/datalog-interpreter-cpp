@@ -13,6 +13,7 @@ private:
 
 public:
     explicit Header(vector<string> attributes): attributes(std::move(attributes)) {}
+    [[nodiscard]] vector<string> getAttributes() const { return attributes; }
 };
 
 #endif //PROJECT_2_HEADER_H
