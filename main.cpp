@@ -53,8 +53,7 @@ int main(int argc, char** argv) {
         // Parse the inputs
         auto parseAst = parser::parse(filtered);
         cout << "Success!" << endl;
-        cout << parseAst.second.toString() << endl;
-        cout << endl;
+        cout << parseAst.second.toString();
     } catch(parser::Error& error) {
         // Handle the error
         cout << "Failure!" << endl;
