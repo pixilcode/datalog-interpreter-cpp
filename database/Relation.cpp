@@ -39,6 +39,12 @@ Relation Relation::rename(const vector<string> &attributes) const {
     return { name, Header(attributes), tuples };
 }
 
+Relation Relation::addTuple(const Tuple& tuple) const {
+    set<Tuple> newTuples(tuples);
+    newTuples.insert(tuple);
+    return { name, header, newTuples };
+}
+
 template<typename T>
 vector<T> pickIndices(const vector<size_t>& indices, const vector<T>& source) {
     vector<T> result(indices.size());

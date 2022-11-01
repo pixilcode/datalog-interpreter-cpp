@@ -11,6 +11,13 @@ private:
 
 public:
     explicit Database(map<string, Relation> relations): relations(std::move(relations)) {}
+    void addRelation(const string& name, const Relation& relation) {
+        relations.insert(pair<string, Relation>(name, relation));
+    }
+    void addTuple(const string& relationName, const Tuple& tuple) {
+        Relation newRelation = relations.at(relationName).addTuple(tuple);
+        relations.insert(pair<string, Relation>(relationName, newRelation));
+    }
 };
 
 

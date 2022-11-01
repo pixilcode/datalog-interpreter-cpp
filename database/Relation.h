@@ -18,6 +18,8 @@ public:
         header(std::move(header)),
         tuples(std::move(tuples)) {}
 
+    [[nodiscard]] Relation addTuple(const Tuple& tuple) const;
+
     [[nodiscard]] Relation selectConstant(size_t index, const string& constant) const;
     [[nodiscard]] Relation selectCompare(size_t indexA, size_t indexB) const;
     [[nodiscard]] Relation project(const vector<size_t>& indices) const;
