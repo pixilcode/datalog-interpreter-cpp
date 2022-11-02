@@ -2,6 +2,6 @@
 /cmake-build-debug/
 
 # Testing
-lab1
+lab*
 out.txt
-Lab2PassOffCases
+Lab*PassOffCases
