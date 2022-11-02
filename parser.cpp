@@ -92,7 +92,7 @@ namespace parser {
             return queryList(queryResult.first, queriesList);
         } catch(RecoverableError& e) {
             if (e.message != "Expected ID") throw e;
-            if (queriesList.empty()) throw Error("Must have at least one query", input.currToken());
+            if (queriesList.empty()) throw Error("Must have at least one runQuery", input.currToken());
             return {input, queriesList};
         }
     }
