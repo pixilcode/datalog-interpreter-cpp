@@ -10,7 +10,7 @@ private:
     map<string, Relation> relations;
 
 public:
-    explicit Database(map<string, Relation> relations): relations(std::move(relations)) {}
+    explicit Database(map<string, Relation> relations = {}): relations(std::move(relations)) {}
     void addRelation(const string& name, const Relation& relation) {
         relations.insert_or_assign(name, relation);
     }

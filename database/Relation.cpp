@@ -45,6 +45,18 @@ Relation Relation::addTuple(const Tuple& tuple) const {
     return { name, header, newTuples };
 }
 
+bool Relation::empty() const {
+    return tuples.empty();
+}
+
+bool Relation::hasAttributes() const {
+    return !header.getAttributes().empty();
+}
+
+size_t Relation::size() const {
+    return tuples.size();
+}
+
 template<typename T>
 vector<T> pickIndices(const vector<size_t>& indices, const vector<T>& source) {
     vector<T> result(indices.size());

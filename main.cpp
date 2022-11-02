@@ -6,6 +6,7 @@
 #include "automaton/all.h" // include all automatons
 #include "Lexer.h"
 #include "parser.h"
+#include "Interpreter.h"
 
 void runTests();
 
@@ -51,8 +52,35 @@ int main(int argc, char** argv) {
     try {
         // Parse the inputs
         auto parseAst = parser::parse(filtered);
-        cout << "Success!" << endl;
-        cout << parseAst.second.toString();
+        auto interpreter = Interpreter(parseAst.second);
+        auto queryResults = interpreter.runQuery();
+        for (const auto& queryResult : queryResults) {
+            bool success = !queryResult.second.empty();
+
+            // Print out query and success message
+            string message = (success) ?
+                    "Yes(" + to_string(queryResult.second.size()) + ")" :
+                    "No";
+            cout << queryResult.first.toString() << " " << message << endl;
+
+            // Print out relation if successful and if the attributes aren't empty
+            if (success && queryResult.second.hasAttributes()) {
+                auto header = queryResult.second.getHeader();
+                auto tuples = queryResult.second.getTuples();
+                for (const auto& tuple : tuples) {
+                    auto values = tuple.getValues();
+
+                    cout << "  ";
+                    for (size_t i = 0; i < values.size(); i++) {
+                        if (i > 0) cout << ", ";
+                        cout << header.getAttributes().at(i);
+                        cout << "=";
+                        cout << values.at(i);
+                    }
+                    cout << endl;
+                }
+            }
+        }
     } catch(parser::Error& error) {
         // Handle the error
         cout << "Failure!" << endl;

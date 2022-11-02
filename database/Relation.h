@@ -19,11 +19,22 @@ public:
         tuples(std::move(tuples)) {}
 
     [[nodiscard]] Relation addTuple(const Tuple& tuple) const;
+    [[nodiscard]] size_t size() const;
+    [[nodiscard]] bool empty() const;
+    [[nodiscard]] bool hasAttributes() const;
 
     [[nodiscard]] Relation selectConstant(size_t index, const string& constant) const;
     [[nodiscard]] Relation selectCompare(size_t indexA, size_t indexB) const;
     [[nodiscard]] Relation project(const vector<size_t>& indices) const;
     [[nodiscard]] Relation rename(const vector<string>& attributes) const;
+
+    [[nodiscard]] Header getHeader() const {
+        return header;
+    }
+
+    [[nodiscard]] set<Tuple> getTuples() const {
+        return tuples;
+    }
 };
 
 template<typename T>

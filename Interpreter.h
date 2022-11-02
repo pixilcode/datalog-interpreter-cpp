@@ -10,14 +10,14 @@ class Interpreter {
 private:
     ast::Program program;
     Database database;
+    Relation evaluatePredicate(const ast::Predicate& pred);
 
 public:
-    Interpreter(ast::Program program, Database database):
+    explicit Interpreter(ast::Program program, Database database = Database()):
             program(std::move(program)),
             database(std::move(database)) {}
 
     vector<pair<ast::Query, Relation>> runQuery();
-    Relation evaluatePredicate(const ast::Predicate& pred);
 };
 
 vector<string> idListToStrings(const vector<ast::Id>& ids);
