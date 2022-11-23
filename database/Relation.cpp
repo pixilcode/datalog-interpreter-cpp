@@ -1,6 +1,8 @@
 #include "Relation.h"
 
 #include <algorithm>
+#include <stdexcept>
+#include <iostream>
 
 Relation Relation::selectConstant(size_t index, const std::string &constant) const {
     set<Tuple> filteredTuples;
@@ -36,6 +38,8 @@ Relation Relation::project(const vector<size_t> &indices) const {
 }
 
 Relation Relation::rename(const vector<string> &attributes) const {
+    if (attributes.size() != header.getAttributes().size())
+        throw runtime_error("Rename must have same number of headers as original");
     return { name, Header(attributes), tuples };
 }
 
@@ -59,7 +63,7 @@ size_t Relation::size() const {
 
 template<typename T>
 vector<T> pickIndices(const vector<size_t>& indices, const vector<T>& source) {
-    vector<T> result(indices.size());
+    vector<T> result;
 
     for(size_t index : indices) {
         result.push_back(source.at(index));

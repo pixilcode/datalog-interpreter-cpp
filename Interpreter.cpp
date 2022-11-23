@@ -1,5 +1,7 @@
 #include "Interpreter.h"
 
+#include <algorithm>
+
 vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
     for (const auto& scheme : program.schemes) {
         // Get the vector of attributes
@@ -57,7 +59,8 @@ Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {
         auto param = pred.params.at(i);
         if (param.isId()) {
             variablesIdx.insert(pair<string, size_t>(param.toId().id, i));
-            variables.push_back(param.toId().id);
+            if (find(variables.begin(), variables.end(), param.toId().id) == variables.end())
+                variables.push_back(param.toId().id);
         }
     }
 
@@ -67,19 +70,21 @@ Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {
     // Iterate through each of the variablesIdx and filter out
     // if there is more than one occurrence in the map
     for (const string& variable : variables) {
+        auto it = variablesIdx.equal_range(variable);
+        auto firstVarName = it.first->first;
+        auto firstIdx = it.first->second;
+
         // If there is more than one occurrence of the variable
         if (variablesIdx.count(variable) > 1) {
-            auto it = variablesIdx.equal_range(variable);
-            auto firstVarName = it.first->first;
-            auto firstIdx = it.first->second;
+
 
             for(auto i = ++it.first; i != it.second; i++) {
                 result = result.selectCompare(firstIdx, i->second);
             }
-
-            variableNames.push_back(firstVarName);
-            variableIdxs.push_back(firstIdx);
         }
+
+        variableNames.push_back(firstVarName);
+        variableIdxs.push_back(firstIdx);
     }
 
     result = result.project(variableIdxs);

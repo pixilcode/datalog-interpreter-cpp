@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
             string message = (success) ?
                     "Yes(" + to_string(queryResult.second.size()) + ")" :
                     "No";
-            cout << queryResult.first.toString() << " " << message << endl;
+            cout << queryResult.first.toString(false) << " " << message << endl;
 
             // Print out relation if successful and if the attributes aren't empty
             if (success && queryResult.second.hasAttributes()) {

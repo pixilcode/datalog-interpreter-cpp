@@ -110,7 +110,10 @@ namespace ast {
 
         explicit Query(Predicate pred): pred(std::move(pred)) {}
 
-        [[nodiscard]] string toString() const { return "  " + pred.toString() + "?"; }
+        [[nodiscard]] string toString(bool indent = true) const {
+            string indentStr = (indent) ? "  " : "";
+            return indentStr + pred.toString() + "?";
+        }
     };
 
     set<string> getDomain(const vector<Fact>& facts);
