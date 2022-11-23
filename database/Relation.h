@@ -13,20 +13,28 @@ private:
     set<Tuple> tuples;
 
 public:
-    Relation(string name, Header header, set<Tuple> tuples):
-        name(std::move(name)),
-        header(std::move(header)),
-        tuples(std::move(tuples)) {}
+    Relation(string name, Header header, set<Tuple> tuples) :
+            name(std::move(name)),
+            header(std::move(header)),
+            tuples(std::move(tuples)) {}
 
-    [[nodiscard]] Relation addTuple(const Tuple& tuple) const;
+    [[nodiscard]] Relation addTuple(const Tuple &tuple) const;
+
     [[nodiscard]] size_t size() const;
+
     [[nodiscard]] bool empty() const;
+
     [[nodiscard]] bool hasAttributes() const;
 
-    [[nodiscard]] Relation selectConstant(size_t index, const string& constant) const;
+    [[nodiscard]] Relation selectConstant(size_t index, const string &constant) const;
+
     [[nodiscard]] Relation selectCompare(size_t indexA, size_t indexB) const;
-    [[nodiscard]] Relation project(const vector<size_t>& indices) const;
-    [[nodiscard]] Relation rename(const vector<string>& attributes) const;
+
+    [[nodiscard]] Relation project(const vector<size_t> &indices) const;
+
+    [[nodiscard]] Relation rename(const vector<string> &attributes) const;
+
+    [[nodiscard]] Relation union_(const Relation &other) const;
 
     [[nodiscard]] Header getHeader() const {
         return header;
@@ -38,6 +46,6 @@ public:
 };
 
 template<typename T>
-vector<T> pickIndices(const vector<size_t>& indices, const vector<T>& source);
+vector<T> pickIndices(const vector<size_t> &indices, const vector<T> &source);
 
 #endif //PROJECT_2_RELATION_H
