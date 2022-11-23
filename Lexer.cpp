@@ -4,8 +4,8 @@
 #include <stdexcept>
 #include <utility>
 
-lexer::Result lexer::run(const string& code) {
-    vector<Automaton*> automatons = {
+lexer::Result lexer::run(const string &code) {
+    vector<Automaton *> automatons = {
             new AddAutomaton(),
             new BlockCommentAutomaton(),
             new ColonAutomaton(),
@@ -26,13 +26,14 @@ lexer::Result lexer::run(const string& code) {
             new UndefinedAutomaton(),
     };
     auto result = lexer::nextToken(code, 0, 1, {}, automatons);
-    for (auto automaton : automatons) delete automaton;
+    for (auto automaton: automatons) delete automaton;
     return result;
 }
 
-lexer::Result lexer::nextToken(const string& code, size_t currIndex, int currLine, vector<Token> tokens, const vector<Automaton*>& automatons) {
+lexer::Result lexer::nextToken(const string &code, size_t currIndex, int currLine, vector<Token> tokens,
+                               const vector<Automaton *> &automatons) {
     // Skip whitespace
-    if(currIndex < code.size() && isspace(code[currIndex])) {
+    if (currIndex < code.size() && isspace(code[currIndex])) {
         int nextLine = (code[currIndex] == '\n') ? currLine + 1 : currLine;
         return lexer::nextToken(code, currIndex + 1, nextLine, std::move(tokens), automatons);
     } else {
@@ -53,7 +54,7 @@ lexer::Result lexer::nextToken(const string& code, size_t currIndex, int currLin
             return lexer::nextToken(code, greatest->finalIndex, greatest->finalLine, std::move(tokens), automatons);
         }
 
-        // Otherwise, handle the end-of-file case
+            // Otherwise, handle the end-of-file case
         else {
             // Check to make sure it's the end of file, then return the list of tokens
             if (currIndex >= code.size()) {
@@ -70,7 +71,7 @@ lexer::Result lexer::nextToken(const string& code, size_t currIndex, int currLin
     }
 }
 
-bool lexer::compareResults(AutomatonResult& resultA, AutomatonResult& resultB) {
+bool lexer::compareResults(AutomatonResult &resultA, AutomatonResult &resultB) {
     if (resultA.has_value() && resultB.has_value())
         return resultA->token < resultB->token;
     else if (resultA.has_value() && !resultB.has_value())

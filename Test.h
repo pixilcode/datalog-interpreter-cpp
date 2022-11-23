@@ -13,11 +13,16 @@ typedef variant<Ok, Error> TestResult;
 
 namespace test {
     TestResult ok();
-    TestResult error(const string& message);
-    bool is_ok(const TestResult& result);
-    string get_error_message(const TestResult& result);
-    TestResult assert(bool condition, const string& errorMessage);
-    TestResult all(const list<TestResult>& results);
+
+    TestResult error(const string &message);
+
+    bool is_ok(const TestResult &result);
+
+    string get_error_message(const TestResult &result);
+
+    TestResult assert(bool condition, const string &errorMessage);
+
+    TestResult all(const list<TestResult> &results);
 }
 
 #endif //PROJECT_1_TEST_H

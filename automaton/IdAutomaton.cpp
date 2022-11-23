@@ -29,12 +29,12 @@ TestResult IdAutomaton::testAutomaton() {
     };
 
     auto hasValueTests = test::all({
-        test::assert(results[0].has_value(), "id - didn't match id"),
-        test::assert(results[1].has_value(), "id - didn't match id"),
-        test::assert(!results[2].has_value(), "id - matched number"),
-        test::assert(!results[3].has_value(), "id - matched empty string"),
-        test::assert(results[4].has_value(), "id - didn't match id"),
-    });
+                                           test::assert(results[0].has_value(), "id - didn't match id"),
+                                           test::assert(results[1].has_value(), "id - didn't match id"),
+                                           test::assert(!results[2].has_value(), "id - matched number"),
+                                           test::assert(!results[3].has_value(), "id - matched empty string"),
+                                           test::assert(results[4].has_value(), "id - didn't match id"),
+                                   });
 
     if (!test::is_ok(hasValueTests)) return hasValueTests;
 
@@ -45,19 +45,25 @@ TestResult IdAutomaton::testAutomaton() {
     };
 
     auto correctValueTests = test::all({
-        test::assert(successes[0].finalIndex == 3, "id - didn't advance index (0)"),
-        test::assert(successes[1].finalIndex == 6, "id - didn't advance index (1)"),
-        test::assert(successes[2].finalIndex == 3, "id - didn't advance index (2)"),
-        test::assert(successes[0].finalLine == 1, "id - advanced line (0)"),
-        test::assert(successes[1].finalLine == 1, "id - advanced line (1)"),
-        test::assert(successes[2].finalLine == 1, "id - advanced line (2)"),
-        test::assert(successes[0].token == Token(TokenType::ID, "abc", 1), "id - token didn't match (0)"),
-        test::assert(successes[1].token == Token(TokenType::ID, "abc123", 1), "id - token didn't match (1)"),
-        test::assert(successes[2].token == Token(TokenType::ID, "abc", 1), "id - token didn't match (2)"),
-    });
+                                               test::assert(successes[0].finalIndex == 3,
+                                                            "id - didn't advance index (0)"),
+                                               test::assert(successes[1].finalIndex == 6,
+                                                            "id - didn't advance index (1)"),
+                                               test::assert(successes[2].finalIndex == 3,
+                                                            "id - didn't advance index (2)"),
+                                               test::assert(successes[0].finalLine == 1, "id - advanced line (0)"),
+                                               test::assert(successes[1].finalLine == 1, "id - advanced line (1)"),
+                                               test::assert(successes[2].finalLine == 1, "id - advanced line (2)"),
+                                               test::assert(successes[0].token == Token(TokenType::ID, "abc", 1),
+                                                            "id - token didn't match (0)"),
+                                               test::assert(successes[1].token == Token(TokenType::ID, "abc123", 1),
+                                                            "id - token didn't match (1)"),
+                                               test::assert(successes[2].token == Token(TokenType::ID, "abc", 1),
+                                                            "id - token didn't match (2)"),
+                                       });
 
     return test::all({
-        hasValueTests,
-        correctValueTests
-    });
+                             hasValueTests,
+                             correctValueTests
+                     });
 }

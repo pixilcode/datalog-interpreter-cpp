@@ -1,24 +1,24 @@
 #include "Token.h"
 
-bool operator==(const Token& rhs, const Token& lhs) {
+bool operator==(const Token &rhs, const Token &lhs) {
     return
-    rhs.type == lhs.type &&
-    rhs.lexeme == lhs.lexeme &&
-    rhs.line == lhs.line;
+            rhs.type == lhs.type &&
+            rhs.lexeme == lhs.lexeme &&
+            rhs.line == lhs.line;
 }
 
 // Determine which token is the "least" in terms of which
 // token should be accepted
-bool operator<(const Token& rhs, const Token& lhs) {
+bool operator<(const Token &rhs, const Token &lhs) {
     // RHS is less  if...
     return
-    // ...the lexeme is shorter or...
-    rhs.lexeme.size() < lhs.lexeme.size() ||
-    // ...the token type of RHS is lower on the list than LHS
-    (rhs.lexeme.size() == lhs.lexeme.size() && rhs.type > lhs.type);
+        // ...the lexeme is shorter or...
+            rhs.lexeme.size() < lhs.lexeme.size() ||
+            // ...the token type of RHS is lower on the list than LHS
+            (rhs.lexeme.size() == lhs.lexeme.size() && rhs.type > lhs.type);
 }
 
-std::string tokenTypeToString(const TokenType& type) {
+std::string tokenTypeToString(const TokenType &type) {
     switch (type) {
         case TokenType::COMMA:
             return "COMMA";
@@ -76,12 +76,12 @@ bool Token::matches(TokenType tType) const {
     return type == tType;
 }
 
-std::ostream& operator<<(std::ostream& os, Token& token) {
+std::ostream &operator<<(std::ostream &os, Token &token) {
     os << token.toString();
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os, TokenType& type) {
+std::ostream &operator<<(std::ostream &os, TokenType &type) {
     os << tokenTypeToString(type);
     return os;
 }

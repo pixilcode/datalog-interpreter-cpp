@@ -3,7 +3,7 @@
 #include <algorithm>
 
 vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
-    for (const auto& scheme : program.schemes) {
+    for (const auto &scheme: program.schemes) {
         // Get the vector of attributes
         vector<string> attributes = idListToStrings(scheme.params);
 
@@ -12,7 +12,7 @@ vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
         database.addRelation(scheme.name.id, relation);
     }
 
-    for (const auto& fact : program.facts) {
+    for (const auto &fact: program.facts) {
         // Make a tuple from the fact
         Tuple tuple = Tuple(stringsListToStrings(fact.args));
 
@@ -28,7 +28,7 @@ vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
 
     vector<pair<ast::Query, Relation>> queryResults;
 
-    for (const auto& query : program.queries) {
+    for (const auto &query: program.queries) {
         // Evaluate the predicate
         Relation result = evaluatePredicate(query.pred);
 
@@ -69,7 +69,7 @@ Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {
 
     // Iterate through each of the variablesIdx and filter out
     // if there is more than one occurrence in the map
-    for (const string& variable : variables) {
+    for (const string &variable: variables) {
         auto it = variablesIdx.equal_range(variable);
         auto firstVarName = it.first->first;
         auto firstIdx = it.first->second;
@@ -78,7 +78,7 @@ Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {
         if (variablesIdx.count(variable) > 1) {
 
 
-            for(auto i = ++it.first; i != it.second; i++) {
+            for (auto i = ++it.first; i != it.second; i++) {
                 result = result.selectCompare(firstIdx, i->second);
             }
         }
@@ -93,21 +93,21 @@ Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {
     return result;
 }
 
-vector<string> idListToStrings(const vector<ast::Id>& ids) {
+vector<string> idListToStrings(const vector<ast::Id> &ids) {
     vector<string> result;
-    for (const auto& id : ids) result.push_back(id.id);
+    for (const auto &id: ids) result.push_back(id.id);
     return result;
 }
 
-vector<string> stringsListToStrings(const vector<ast::String>& strings) {
+vector<string> stringsListToStrings(const vector<ast::String> &strings) {
     vector<string> result;
-    for (const auto& string_ : strings) result.push_back(string_.string_);
+    for (const auto &string_: strings) result.push_back(string_.string_);
     return result;
 }
 
-vector<string> paramsListToParams(const vector<ast::Parameter>& params) {
+vector<string> paramsListToParams(const vector<ast::Parameter> &params) {
     vector<string> result;
-    for (const auto& param : params)
+    for (const auto &param: params)
         if (param.isId()) result.push_back(param.toId().id);
         else result.push_back(param.toString_().string_);
     return result;

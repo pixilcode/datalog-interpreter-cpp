@@ -10,7 +10,8 @@ AutomatonResult LineCommentAutomaton::s0(const string &input, size_t currIndex, 
     }
 }
 
-AutomatonResult LineCommentAutomaton::s1(const string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
+AutomatonResult
+LineCommentAutomaton::s1(const string &input, size_t initIndex, size_t currIndex, int initLine, int currLine) {
     if (currIndex >= input.length()) {
         auto token = Token(TokenType::COMMENT, input.substr(initIndex, currIndex - initIndex), initLine);
         return AutomatonSuccess(token, currIndex, currLine);
@@ -35,14 +36,19 @@ TestResult LineCommentAutomaton::testAutomaton() {
     };
 
     auto hasValueTests = test::all({
-        test::assert(results[0].has_value(), "line comment - didn't match line comment (0)"),
-        test::assert(results[1].has_value(), "line comment - didn't match line comment (1)"),
-        test::assert(results[2].has_value(), "line comment - didn't match line comment (2)"),
-        test::assert(results[3].has_value(), "line comment - didn't match line comment (3)"),
-        test::assert(!results[4].has_value(), "line comment - matched empty string"),
-        test::assert(!results[5].has_value(), "line comment - matched non comment"),
-        test::assert(!results[6].has_value(), "line comment - matched block comment"),
-    });
+                                           test::assert(results[0].has_value(),
+                                                        "line comment - didn't match line comment (0)"),
+                                           test::assert(results[1].has_value(),
+                                                        "line comment - didn't match line comment (1)"),
+                                           test::assert(results[2].has_value(),
+                                                        "line comment - didn't match line comment (2)"),
+                                           test::assert(results[3].has_value(),
+                                                        "line comment - didn't match line comment (3)"),
+                                           test::assert(!results[4].has_value(), "line comment - matched empty string"),
+                                           test::assert(!results[5].has_value(), "line comment - matched non comment"),
+                                           test::assert(!results[6].has_value(),
+                                                        "line comment - matched block comment"),
+                                   });
 
     if (!test::is_ok(hasValueTests)) return hasValueTests;
 
@@ -54,24 +60,36 @@ TestResult LineCommentAutomaton::testAutomaton() {
     };
 
     auto correctValueTests = test::all({
-        test::assert(successes[0].finalIndex == 1, "line comment - didn't advance index (0)"),
-        test::assert(successes[1].finalIndex == 5, "line comment - didn't advance index (1)"),
-        test::assert(successes[2].finalIndex == 6, "line comment - didn't advance index (2)"),
-        test::assert(successes[3].finalIndex == 6, "line comment - didn't advance index (3)"),
+                                               test::assert(successes[0].finalIndex == 1,
+                                                            "line comment - didn't advance index (0)"),
+                                               test::assert(successes[1].finalIndex == 5,
+                                                            "line comment - didn't advance index (1)"),
+                                               test::assert(successes[2].finalIndex == 6,
+                                                            "line comment - didn't advance index (2)"),
+                                               test::assert(successes[3].finalIndex == 6,
+                                                            "line comment - didn't advance index (3)"),
 
-        test::assert(successes[0].finalLine == 1, "line comment - advanced line (0)"),
-        test::assert(successes[1].finalLine == 1, "line comment - advanced line (1)"),
-        test::assert(successes[2].finalLine == 2, "line comment - didn't advance line (2)"),
-        test::assert(successes[3].finalLine == 2, "line comment - didn't advance line (3)"),
+                                               test::assert(successes[0].finalLine == 1,
+                                                            "line comment - advanced line (0)"),
+                                               test::assert(successes[1].finalLine == 1,
+                                                            "line comment - advanced line (1)"),
+                                               test::assert(successes[2].finalLine == 2,
+                                                            "line comment - didn't advance line (2)"),
+                                               test::assert(successes[3].finalLine == 2,
+                                                            "line comment - didn't advance line (3)"),
 
-        test::assert(successes[0].token == Token(TokenType::COMMENT, "#", 1), "line comment - token didn't match (0)"),
-        test::assert(successes[1].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (1)"),
-        test::assert(successes[2].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (2)"),
-        test::assert(successes[3].token == Token(TokenType::COMMENT, "# abc", 1), "line comment - token didn't match (3)"),
-    });
+                                               test::assert(successes[0].token == Token(TokenType::COMMENT, "#", 1),
+                                                            "line comment - token didn't match (0)"),
+                                               test::assert(successes[1].token == Token(TokenType::COMMENT, "# abc", 1),
+                                                            "line comment - token didn't match (1)"),
+                                               test::assert(successes[2].token == Token(TokenType::COMMENT, "# abc", 1),
+                                                            "line comment - token didn't match (2)"),
+                                               test::assert(successes[3].token == Token(TokenType::COMMENT, "# abc", 1),
+                                                            "line comment - token didn't match (3)"),
+                                       });
 
     return test::all({
-        hasValueTests,
-        correctValueTests
-    });
+                             hasValueTests,
+                             correctValueTests
+                     });
 }

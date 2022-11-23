@@ -10,15 +10,18 @@ using namespace std;
 
 namespace lexer {
     typedef vector<Token> Result;
-    Result run(const string& code);
+
+    Result run(const string &code);
+
     Result nextToken(
-        const string& code,
-        size_t currIndex,
-        int currLine,
-        vector<Token> tokens,
-        const vector<Automaton*>& automatons
+            const string &code,
+            size_t currIndex,
+            int currLine,
+            vector<Token> tokens,
+            const vector<Automaton *> &automatons
     );
-    bool compareResults(AutomatonResult& resultA, AutomatonResult& resultB);
+
+    bool compareResults(AutomatonResult &resultA, AutomatonResult &resultB);
 }
 
 #endif //PROJECT_1_LEXER_H

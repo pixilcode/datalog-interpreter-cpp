@@ -12,7 +12,8 @@ private:
     vector<string> attributes;
 
 public:
-    explicit Header(vector<string> attributes): attributes(std::move(attributes)) {}
+    explicit Header(vector<string> attributes) : attributes(std::move(attributes)) {}
+
     [[nodiscard]] vector<string> getAttributes() const { return attributes; }
 };
 

@@ -12,9 +12,10 @@ private:
     vector<string> values;
 
 public:
-    explicit Tuple(vector<string> values): values(std::move(values)) {}
+    explicit Tuple(vector<string> values) : values(std::move(values)) {}
 
     [[nodiscard]] string get(size_t index) const { return values.at(index); }
+
     [[nodiscard]] vector<string> getValues() const { return values; }
 
     bool operator<(const Tuple &rhs) const {

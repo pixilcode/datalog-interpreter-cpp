@@ -17,11 +17,11 @@ TestResult PeriodAutomaton::testAutomaton() {
     auto resultD = period.start(". - abc", 0, 1);
 
     auto hasValueTests = test::all({
-        test::assert(resultA.has_value(), "period - didn't match period"),
-        test::assert(!resultB.has_value(), "period - matched non-period 'a'"),
-        test::assert(!resultC.has_value(), "period - matched empty string"),
-        test::assert(resultD.has_value(), "period - didn't match period"),
-    });
+                                           test::assert(resultA.has_value(), "period - didn't match period"),
+                                           test::assert(!resultB.has_value(), "period - matched non-period 'a'"),
+                                           test::assert(!resultC.has_value(), "period - matched empty string"),
+                                           test::assert(resultD.has_value(), "period - didn't match period"),
+                                   });
 
     if (!test::is_ok(hasValueTests)) return hasValueTests;
 
@@ -32,21 +32,28 @@ TestResult PeriodAutomaton::testAutomaton() {
     auto resultDToken = resultDValue.token;
 
     auto correctValueTests = test::all({
-        test::assert(resultAValue.finalIndex == 1, "period - didn't advance index"),
-        test::assert(resultAValue.finalLine == 1, "period - incorrect line number"),
-        test::assert(resultAToken.type == TokenType::PERIOD, "period - incorrect token type"),
-        test::assert(resultAToken.lexeme == ".", "period - incorrect lexeme"),
-        test::assert(resultAToken.line == 1, "period - incorrect line"),
+                                               test::assert(resultAValue.finalIndex == 1,
+                                                            "period - didn't advance index"),
+                                               test::assert(resultAValue.finalLine == 1,
+                                                            "period - incorrect line number"),
+                                               test::assert(resultAToken.type == TokenType::PERIOD,
+                                                            "period - incorrect token type"),
+                                               test::assert(resultAToken.lexeme == ".", "period - incorrect lexeme"),
+                                               test::assert(resultAToken.line == 1, "period - incorrect line"),
 
-        test::assert(resultDValue.finalIndex == 1, "period - didn't advance index (3)"),
-        test::assert(resultDValue.finalLine == 1, "period - incorrect line number (3)"),
-        test::assert(resultDToken.type == TokenType::PERIOD, "period - incorrect token type (3)"),
-        test::assert(resultDToken.lexeme == ".", "period - incorrect lexeme (3)"),
-        test::assert(resultDToken.line == 1, "period - incorrect line (3)"),
-    });
+                                               test::assert(resultDValue.finalIndex == 1,
+                                                            "period - didn't advance index (3)"),
+                                               test::assert(resultDValue.finalLine == 1,
+                                                            "period - incorrect line number (3)"),
+                                               test::assert(resultDToken.type == TokenType::PERIOD,
+                                                            "period - incorrect token type (3)"),
+                                               test::assert(resultDToken.lexeme == ".",
+                                                            "period - incorrect lexeme (3)"),
+                                               test::assert(resultDToken.line == 1, "period - incorrect line (3)"),
+                                       });
 
     return test::all({
-        hasValueTests,
-        correctValueTests
-    });
+                             hasValueTests,
+                             correctValueTests
+                     });
 }

@@ -14,7 +14,7 @@ namespace parser {
         vector<Token> tokens;
         size_t curr;
 
-        explicit ParseInput(vector<Token> tokens, size_t curr = 0):
+        explicit ParseInput(vector<Token> tokens, size_t curr = 0) :
                 tokens(std::move(tokens)),
                 curr(curr) {}
 
@@ -32,48 +32,65 @@ namespace parser {
         string message;
         Token token;
 
-        Error(string message, Token token): message(std::move(message)), token(std::move(token)) {}
+        Error(string message, Token token) : message(std::move(message)), token(std::move(token)) {}
     };
 
     struct RecoverableError : Error {
-        RecoverableError(string message, Token token): Error(std::move(message), std::move(token)) {}
+        RecoverableError(string message, Token token) : Error(std::move(message), std::move(token)) {}
     };
 
     template<typename T>
     using Result = pair<ParseInput, T>;
 
-    Result<Program> parse(const vector<Token>& tokens);
-    Result<Program> program(const ParseInput& input);
+    Result<Program> parse(const vector<Token> &tokens);
 
-    Result<vector<Scheme>> schemes(const ParseInput& input);
-    Result<vector<Fact>> facts(const ParseInput& input);
-    Result<vector<Rule>> rules(const ParseInput& input);
-    Result<vector<Query>> queries(const ParseInput& input);
+    Result<Program> program(const ParseInput &input);
 
-    Result<vector<Scheme>> schemeList(const ParseInput& input, vector<Scheme> schemesList = {});
-    Result<vector<Fact>> factList(const ParseInput& input, vector<Fact> factsList = {});
-    Result<vector<Rule>> ruleList(const ParseInput& input, vector<Rule> rulesList = {});
-    Result<vector<Query>> queryList(const ParseInput& input, vector<Query> queriesList = {});
+    Result<vector<Scheme>> schemes(const ParseInput &input);
 
-    Result<Scheme> scheme(const ParseInput& input);
-    Result<Fact> fact(const ParseInput& input);
-    Result<Rule> rule(const ParseInput& input);
-    Result<Query> query(const ParseInput& input);
+    Result<vector<Fact>> facts(const ParseInput &input);
 
-    Result<HeadPredicate> headPredicate(const ParseInput& input);
-    Result<Predicate> predicate(const ParseInput& input, bool recoverable = false);
+    Result<vector<Rule>> rules(const ParseInput &input);
 
-    Result<vector<Predicate>> predicateList(const ParseInput& input, vector<Predicate> predicatesList = {});
-    Result<vector<Parameter>> parameterList(const ParseInput& input, vector<Parameter> parametersList = {});
-    Result<vector<Id>> idList(const ParseInput& input, vector<Id> idsList = {});
-    Result<vector<String>> stringList(const ParseInput& input, vector<String> stringsList = {});
+    Result<vector<Query>> queries(const ParseInput &input);
 
-    Result<Id> id(const ParseInput& input, bool recoverable = false);
-    Result<String> string(const ParseInput& input);
-    Result<Parameter> parameter(const ParseInput& input);
+    Result<vector<Scheme>> schemeList(const ParseInput &input, vector<Scheme> schemesList = {});
 
-    pair<ParseInput, Token> matchToken(const ParseInput& token, TokenType tType);
-    optional<pair<ParseInput, Token>> tryToken(const ParseInput& input, TokenType tType);
+    Result<vector<Fact>> factList(const ParseInput &input, vector<Fact> factsList = {});
+
+    Result<vector<Rule>> ruleList(const ParseInput &input, vector<Rule> rulesList = {});
+
+    Result<vector<Query>> queryList(const ParseInput &input, vector<Query> queriesList = {});
+
+    Result<Scheme> scheme(const ParseInput &input);
+
+    Result<Fact> fact(const ParseInput &input);
+
+    Result<Rule> rule(const ParseInput &input);
+
+    Result<Query> query(const ParseInput &input);
+
+    Result<HeadPredicate> headPredicate(const ParseInput &input);
+
+    Result<Predicate> predicate(const ParseInput &input, bool recoverable = false);
+
+    Result<vector<Predicate>> predicateList(const ParseInput &input, vector<Predicate> predicatesList = {});
+
+    Result<vector<Parameter>> parameterList(const ParseInput &input, vector<Parameter> parametersList = {});
+
+    Result<vector<Id>> idList(const ParseInput &input, vector<Id> idsList = {});
+
+    Result<vector<String>> stringList(const ParseInput &input, vector<String> stringsList = {});
+
+    Result<Id> id(const ParseInput &input, bool recoverable = false);
+
+    Result<String> string(const ParseInput &input);
+
+    Result<Parameter> parameter(const ParseInput &input);
+
+    pair<ParseInput, Token> matchToken(const ParseInput &token, TokenType tType);
+
+    optional<pair<ParseInput, Token>> tryToken(const ParseInput &input, TokenType tType);
 }
 
 #define PROJECT_2_PARSER_H

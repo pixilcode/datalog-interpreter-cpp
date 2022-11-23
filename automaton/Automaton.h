@@ -1,5 +1,6 @@
 #ifndef AUTOMATON_H
 #define AUTOMATON_H
+
 #include <optional>
 #include <tuple>
 #include <utility>
@@ -13,7 +14,7 @@ struct AutomatonSuccess {
     size_t finalIndex;
     int finalLine;
 
-    AutomatonSuccess(Token token, size_t finalIndex, int finalLine):
+    AutomatonSuccess(Token token, size_t finalIndex, int finalLine) :
             token(std::move(token)),
             finalIndex(finalIndex),
             finalLine(finalLine) {}
@@ -23,8 +24,9 @@ typedef optional<AutomatonSuccess> AutomatonResult;
 
 class Automaton {
 public:
-    virtual AutomatonResult s0(const string& input, size_t currIndex, int currLine) = 0;
-    AutomatonResult start(const string& input, size_t currIndex, int currLine) {
+    virtual AutomatonResult s0(const string &input, size_t currIndex, int currLine) = 0;
+
+    AutomatonResult start(const string &input, size_t currIndex, int currLine) {
         return s0(input, currIndex, currLine);
     }
 
@@ -33,6 +35,7 @@ public:
     }
 
     virtual TestResult testAutomaton() = 0;
+
     virtual ~Automaton() = default;
 };
 

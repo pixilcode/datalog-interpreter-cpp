@@ -36,10 +36,10 @@ string ast::predicatesToString(vector<ast::Predicate> predicates) {
     return out.str();
 }
 
-set<string> ast::getDomain(const vector<ast::Fact>& facts) {
+set<string> ast::getDomain(const vector<ast::Fact> &facts) {
     set<string> domain;
-    for (const ast::Fact& fact : facts)
-        for (const ast::String& string_ : fact.args)
+    for (const ast::Fact &fact: facts)
+        for (const ast::String &string_: fact.args)
             domain.insert(string_.toString());
     return domain;
 }

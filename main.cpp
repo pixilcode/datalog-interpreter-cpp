@@ -10,7 +10,7 @@
 
 void runTests();
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     bool debug = std::getenv("DEBUG") != nullptr;
 
     // Debug
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 
     // Filter out comments
     vector<Token> filtered;
-    for (const Token& token : result) {
+    for (const Token &token: result) {
         if (token.type != TokenType::COMMENT)
             filtered.push_back(token);
     }
@@ -54,20 +54,20 @@ int main(int argc, char** argv) {
         auto parseAst = parser::parse(filtered);
         auto interpreter = Interpreter(parseAst.second);
         auto queryResults = interpreter.runQuery();
-        for (const auto& queryResult : queryResults) {
+        for (const auto &queryResult: queryResults) {
             bool success = !queryResult.second.empty();
 
             // Print out query and success message
             string message = (success) ?
-                    "Yes(" + to_string(queryResult.second.size()) + ")" :
-                    "No";
+                             "Yes(" + to_string(queryResult.second.size()) + ")" :
+                             "No";
             cout << queryResult.first.toString(false) << " " << message << endl;
 
             // Print out relation if successful and if the attributes aren't empty
             if (success && queryResult.second.hasAttributes()) {
                 auto header = queryResult.second.getHeader();
                 auto tuples = queryResult.second.getTuples();
-                for (const auto& tuple : tuples) {
+                for (const auto &tuple: tuples) {
                     auto values = tuple.getValues();
 
                     cout << "  ";
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
                 }
             }
         }
-    } catch(parser::Error& error) {
+    } catch (parser::Error &error) {
         // Handle the error
         cout << "Failure!" << endl;
         if (debug) cout << "  " << error.message << endl;
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
 }
 
 void runTests() {
-    vector<Automaton*> automatons = {
+    vector<Automaton *> automatons = {
             new AddAutomaton(),
             new BlockCommentAutomaton(),
             new ColonAutomaton(),
@@ -114,7 +114,7 @@ void runTests() {
     };
 
     cout << "running automaton tests..." << endl;
-    for(auto automaton : automatons) {
+    for (auto automaton: automatons) {
         auto testResult = automaton->testAutomaton();
         if (!test::is_ok(testResult))
             cout << "ERROR: " << test::get_error_message(testResult) << endl;
