@@ -55,13 +55,23 @@ Relation Relation::rename(const vector<string> &attributes) const {
     return {name, Header(attributes), tuples};
 }
 
-pair<Relation, size_t> Relation::union_(const Relation &other) const {
+pair<Relation, Relation> Relation::union_(const Relation &other) const {
     if (header.getAttributes() != other.header.getAttributes())
         throw runtime_error("Union must be between two relations with the same headers");
     set<Tuple> newTuples(tuples);
+    set<Tuple> addedTuples;
+
+    for (const auto &tuple: other.tuples) {
+        const auto [_, wasAdded] = newTuples.insert(tuple);
+        if (wasAdded) {
+            addedTuples.emplace(tuple);
+        }
+    }
+
     newTuples.insert(other.tuples.begin(), other.tuples.end());
     const bool added = tuples.size() - newTuples.size();
-    return {{name, header, newTuples}, added};
+    return {{name, header, newTuples},
+            {name, header, addedTuples}};
 }
 
 Relation Relation::naturalJoin(const Relation &other) const {

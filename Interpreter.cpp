@@ -58,11 +58,11 @@ tuple<
                     projectResult.rename(oldRelation.getHeader().getAttributes());
 
             // Union with the relation in the database
-            auto [finalRelation, tuplesAdded] = oldRelation.union_(renameResult);
+            auto [finalRelation, newTuples] = oldRelation.union_(renameResult);
             database.addRelation(rule.head.name.id, finalRelation);
 
-            rulesEval.emplace_back(rule, renameResult);
-            noAddition = noAddition && tuplesAdded == 0;
+            rulesEval.emplace_back(rule, newTuples);
+            noAddition = noAddition && newTuples.empty();
         }
     } while (!noAddition);
 
