@@ -108,8 +108,9 @@ namespace ast {
                 head(std::move(head)),
                 predicates(std::move(predicates)) {}
 
-        [[nodiscard]] string toString() const {
-            return "  " + head.toString() + " :- " + predicatesToString(predicates) + ".";
+        [[nodiscard]] string toString(bool indent = true) const {
+            string indentStr = (indent) ? "  " : "";
+            return indentStr + head.toString() + " :- " + predicatesToString(predicates) + ".";
         }
     };
 

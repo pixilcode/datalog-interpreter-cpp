@@ -1,8 +1,13 @@
 #include "Interpreter.h"
 
 #include <algorithm>
+#include <iostream>
 
-vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
+tuple<
+        vector<pair<ast::Rule, Relation>>,
+        int,
+        vector<pair<ast::Query, Relation>>
+> Interpreter::runQuery() {
     for (const auto &scheme: program.schemes) {
         // Get the vector of attributes
         vector<string> attributes = idListToStrings(scheme.params);
@@ -20,26 +25,46 @@ vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
         database.addTuple(fact.name.id, tuple);
     }
 
-    for (const auto &rule: program.rules) {
-        if (rule.predicates.empty())
-            throw runtime_error("Rule can't have zero predicates");
+    bool noAddition;
+    int numPasses = 0;
+    vector<pair<ast::Rule, Relation>> rulesEval;
+    do {
+        noAddition = true;
+        ++numPasses;
+        for (const auto &rule: program.rules) {
+            if (rule.predicates.empty())
+                throw runtime_error("Rule can't have zero predicates");
 
-        // Evaluate predicates on RHS
-        vector<Relation> predicateResults;
-        for (const auto &pred: rule.predicates) {
-            predicateResults.push_back(evaluatePredicate(pred));
+            // Evaluate predicates on RHS
+            vector<Relation> predicateResults;
+            for (const auto &pred: rule.predicates) {
+                predicateResults.push_back(evaluatePredicate(pred));
+            }
+
+            // Join the resulting relations
+            Relation joinResult = predicateResults.at(0);
+            for (size_t i = 1; i < predicateResults.size(); i++) {
+                joinResult = joinResult.naturalJoin(predicateResults.at(i));
+            }
+
+            // Project the columns that appear in the head predicate
+            vector<string> header = makeHeader(rule.head.params);
+            Relation projectResult = joinResult.project(header);
+
+            // Rename the relation to make it union-compatible
+            Relation oldRelation =
+                    database.getRelation(rule.head.name.id);
+            Relation renameResult =
+                    projectResult.rename(oldRelation.getHeader().getAttributes());
+
+            // Union with the relation in the database
+            auto [finalRelation, tuplesAdded] = oldRelation.union_(renameResult);
+            database.addRelation(rule.head.name.id, finalRelation);
+
+            rulesEval.emplace_back(rule, renameResult);
+            noAddition = noAddition && tuplesAdded == 0;
         }
-
-        // Join the resulting relations
-        Relation joinResult = predicateResults.at(0);
-        for (size_t i = 1; i < predicateResults.size(); i++) {
-            joinResult = joinResult.naturalJoin(predicateResults.at(i));
-        }
-
-        // Project the columns that appear in the head predicate
-        vector<string> header = makeHeader(rule.head.params);
-        Relation projectResult = joinResult.project(header);
-    }
+    } while (!noAddition);
 
     vector<pair<ast::Query, Relation>> queryResults;
 
@@ -50,7 +75,7 @@ vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
         queryResults.emplace_back(query, result);
     }
 
-    return queryResults;
+    return {rulesEval, numPasses, queryResults};
 }
 
 Relation Interpreter::evaluatePredicate(const ast::Predicate &pred) {

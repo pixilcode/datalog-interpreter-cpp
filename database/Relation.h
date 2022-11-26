@@ -39,9 +39,10 @@ public:
 
     [[nodiscard]] Relation rename(const vector<string> &attributes) const;
 
-    [[nodiscard]] Relation union_(const Relation &other) const;
-
     [[nodiscard]] Relation naturalJoin(const Relation &other) const;
+
+    // Returns a size_t to indicate the number of tuples that were added
+    [[nodiscard]] pair<Relation, size_t> union_(const Relation &other) const;
 
     // GETTERS
 
