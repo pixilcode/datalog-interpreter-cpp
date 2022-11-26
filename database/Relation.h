@@ -3,6 +3,7 @@
 
 #include <set>
 #include <utility>
+#include <variant>
 #include "Header.h"
 #include "Tuple.h"
 
@@ -26,6 +27,8 @@ public:
 
     [[nodiscard]] bool hasAttributes() const;
 
+    // RELATIONAL OPERATORS
+
     [[nodiscard]] Relation selectConstant(size_t index, const string &constant) const;
 
     [[nodiscard]] Relation selectCompare(size_t indexA, size_t indexB) const;
@@ -35,6 +38,10 @@ public:
     [[nodiscard]] Relation rename(const vector<string> &attributes) const;
 
     [[nodiscard]] Relation union_(const Relation &other) const;
+
+    [[nodiscard]] Relation naturalJoin(const Relation &other) const;
+
+    // GETTERS
 
     [[nodiscard]] Header getHeader() const {
         return header;
@@ -47,5 +54,9 @@ public:
 
 template<typename T>
 vector<T> pickIndices(const vector<size_t> &indices, const vector<T> &source);
+
+bool commonHeadersMatch(const Tuple &tupleA, const Tuple &tupleB, const set<pair<size_t, size_t>> &sharedHeaders);
+
+Tuple makeNewTuple(const Tuple &tupleA, const Tuple &tupleB, const vector<variant<size_t, size_t>> &headerLoc);
 
 #endif //PROJECT_2_RELATION_H
