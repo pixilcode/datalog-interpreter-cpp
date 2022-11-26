@@ -69,7 +69,7 @@ pair<Relation, Relation> Relation::union_(const Relation &other) const {
     }
 
     newTuples.insert(other.tuples.begin(), other.tuples.end());
-    const bool added = tuples.size() - newTuples.size();
+
     return {{name, header, newTuples},
             {name, header, addedTuples}};
 }
