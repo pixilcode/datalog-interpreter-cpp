@@ -20,11 +20,26 @@ vector<pair<ast::Query, Relation>> Interpreter::runQuery() {
         database.addTuple(fact.name.id, tuple);
     }
 
-    /*
-    for (const auto& rule : program.rules) {
+    for (const auto &rule: program.rules) {
+        if (rule.predicates.empty())
+            throw runtime_error("Rule can't have zero predicates");
 
+        // Evaluate predicates on RHS
+        vector<Relation> predicateResults;
+        for (const auto &pred: rule.predicates) {
+            predicateResults.push_back(evaluatePredicate(pred));
+        }
+
+        // Join the resulting relations
+        Relation joinResult = predicateResults.at(0);
+        for (size_t i = 1; i < predicateResults.size(); i++) {
+            joinResult = joinResult.naturalJoin(predicateResults.at(i));
+        }
+
+        // Project the columns that appear in the head predicate
+        vector<string> header = makeHeader(rule.head.params);
+        Relation projectResult = joinResult.project(header);
     }
-    */
 
     vector<pair<ast::Query, Relation>> queryResults;
 
@@ -110,5 +125,15 @@ vector<string> paramsListToParams(const vector<ast::Parameter> &params) {
     for (const auto &param: params)
         if (param.isId()) result.push_back(param.toId().id);
         else result.push_back(param.toString_().string_);
+    return result;
+}
+
+vector<string> makeHeader(const vector<ast::Id> &params) {
+    vector<string> result;
+
+    for (const auto &param: params) {
+        result.push_back(param.id);
+    }
+
     return result;
 }

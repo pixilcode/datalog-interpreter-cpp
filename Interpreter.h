@@ -27,4 +27,6 @@ vector<string> stringsListToStrings(const vector<ast::String> &strings);
 
 vector<string> paramsListToParams(const vector<ast::Parameter> &params);
 
+vector<string> makeHeader(const vector<ast::Id> &params);
+
 #endif //PROJECT_2_INTERPRETER_H

@@ -37,6 +37,18 @@ Relation Relation::project(const vector<size_t> &indices) const {
     return {name, newHeader, newTuples};
 }
 
+Relation Relation::project(const vector<string> &names) const {
+    vector<size_t> indices;
+    auto attributes = header.getAttributes();
+    for (const auto &colName: names) {
+        auto col = find(attributes.begin(), attributes.end(), colName);
+        auto colIndex = col - attributes.begin();
+        indices.push_back(colIndex);
+    }
+
+    return project(indices);
+}
+
 Relation Relation::rename(const vector<string> &attributes) const {
     if (attributes.size() != header.getAttributes().size())
         throw runtime_error("Rename must have same number of headers as original");

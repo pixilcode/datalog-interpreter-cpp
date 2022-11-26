@@ -35,6 +35,8 @@ public:
 
     [[nodiscard]] Relation project(const vector<size_t> &indices) const;
 
+    [[nodiscard]] Relation project(const vector<string> &names) const;
+
     [[nodiscard]] Relation rename(const vector<string> &attributes) const;
 
     [[nodiscard]] Relation union_(const Relation &other) const;
