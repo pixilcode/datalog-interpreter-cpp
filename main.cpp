@@ -52,29 +52,7 @@ int main(int argc, char **argv) {
         // Parse the inputs
         auto parseAst = parser::parse(filtered);
         auto interpreter = Interpreter(parseAst.second);
-        auto [rulesEval, numPasses, queryResults] = interpreter.runQuery();
-
-        cout << "Rule Evaluation" << endl;
-        for (const auto &[rule, relation]: rulesEval) {
-            cout << rule.toString(false) << endl;
-
-            auto header = relation.getHeader();
-            auto tuples = relation.getTuples();
-            for (const auto &tuple: tuples) {
-                auto values = tuple.getValues();
-
-                cout << "  ";
-                for (size_t i = 0; i < values.size(); i++) {
-                    if (i > 0) cout << ", ";
-                    cout << header.getAttributes().at(i);
-                    cout << "=";
-                    cout << values.at(i);
-                }
-                cout << endl;
-            }
-        }
-
-        cout << endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl;
+        auto queryResults = interpreter.runQuery();
 
         cout << endl << "Query Evaluation" << endl;
         for (const auto &queryResult: queryResults) {

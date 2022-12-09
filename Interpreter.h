@@ -18,11 +18,7 @@ public:
             program(std::move(program)),
             database(std::move(database)) {}
 
-    tuple<
-            vector<pair<ast::Rule, Relation>>,
-            int,
-            vector<pair<ast::Query, Relation>>
-    > runQuery();
+    vector<pair<ast::Query, Relation>> runQuery();
 };
 
 vector<string> idListToStrings(const vector<ast::Id> &ids);

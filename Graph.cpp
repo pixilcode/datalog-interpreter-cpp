@@ -1,9 +1,10 @@
 #include "Graph.h"
 
-template<typename Id>
-pair<vector<Id>, map<Id, bool>> Graph<Id>::postorderTraverse(const Id curr, const map<Id, bool> &visited) {
+#include <sstream>
+
+pair<vector<Id>, map<Id, bool>> Graph::postorderTraverse(const Id curr, const map<Id, bool> &visited) const {
     // If it's visited, return an empty vector
-    if (visited[curr]) {
+    if (visited.find(curr) != visited.end() && visited.at(curr)) {
         return {{}, visited};
     }
 
@@ -11,10 +12,10 @@ pair<vector<Id>, map<Id, bool>> Graph<Id>::postorderTraverse(const Id curr, cons
     map<Id, bool> visitedResult(visited);
 
     // Mark the current node as visited
-    visitedResult.emplace({curr, true});
+    visitedResult.emplace(curr, true);
 
     // For each node that is adjacent...
-    for (const auto &id: adjList) {
+    for (const auto &id: adjList.at(curr)) {
         // Visit it with the visited list
         auto [postList, newVisited] = postorderTraverse(id, visitedResult);
 
@@ -29,10 +30,9 @@ pair<vector<Id>, map<Id, bool>> Graph<Id>::postorderTraverse(const Id curr, cons
     return {result, visitedResult};
 }
 
-template<typename Id>
-pair<set<Id>, map<Id, bool>> Graph<Id>::sccTraverse(const Id curr, const map<Id, bool> &visited) {
+pair<set<Id>, map<Id, bool>> Graph::sccTraverse(const Id curr, const map<Id, bool> &visited) const {
     // If it's visited, return an empty vector
-    if (visited[curr]) {
+    if (visited.find(curr) != visited.end() && visited.at(curr)) {
         return {{}, visited};
     }
 
@@ -40,15 +40,15 @@ pair<set<Id>, map<Id, bool>> Graph<Id>::sccTraverse(const Id curr, const map<Id,
     map<Id, bool> visitedResult(visited);
 
     // Mark the current node as visited
-    visitedResult.emplace({curr, true});
+    visitedResult.emplace(curr, true);
 
     // For each node that is adjacent...
-    for (const auto &id: adjList) {
+    for (const auto &id: adjList.at(curr)) {
         // Visit it with the visited list
         auto [postList, newVisited] = postorderTraverse(id, visitedResult);
 
         // Add the results
-        result.insert(result.end(), postList.begin(), postList.end());
+        result.insert(postList.begin(), postList.end());
         visitedResult = newVisited;
     }
 
@@ -58,13 +58,12 @@ pair<set<Id>, map<Id, bool>> Graph<Id>::sccTraverse(const Id curr, const map<Id,
     return {result, visitedResult};
 }
 
-template<typename Id>
-vector<Id> Graph<Id>::postorder(vector<Id> order) const {
+vector<Id> Graph::postorder(const vector<Id> &order) const {
     vector<Id> result;
     map<Id, bool> visited;
 
     for (const auto &id: order) {
-        if (find(visited.begin(), visited.end(), id) == visited.end()) {
+        if (visited.find(id) == visited.end() || !visited.at(id)) {
             // Visit it with the visited list
             auto [postList, newVisited] = postorderTraverse(id, visited);
 
@@ -77,13 +76,12 @@ vector<Id> Graph<Id>::postorder(vector<Id> order) const {
     return result;
 }
 
-template<typename Id>
-vector<set<Id>> Graph<Id>::scc(vector<Id> order) const {
+vector<set<Id>> Graph::scc(const vector<Id> &order) const {
     vector<set<Id>> result;
     map<Id, bool> visited;
 
     for (const auto &id: order) {
-        if (find(visited.begin(), visited.end(), id) == visited.end()) {
+        if (visited.find(id) == visited.end() || !visited.at(id)) {
             // Visit it with the visited list
             auto [scc, newVisited] = sccTraverse(id, visited);
 
@@ -94,4 +92,22 @@ vector<set<Id>> Graph<Id>::scc(vector<Id> order) const {
     }
 
     return result;
+}
+
+string Graph::toString() const {
+    ostringstream result;
+    for (const auto &[from, tos]: adjList) {
+        result << "R" << from << ":";
+        size_t i = 0;
+        for (const auto &to: tos) {
+            result << "R" << to;
+            if (i++ < tos.size() - 1) result << ",";
+        }
+        result << "\n";
+    }
+    return result.str();
+}
+
+bool Graph::hasIdLoop(const Id &node) const {
+    return adjList.at(node).find(node) != adjList.at(node).end();
 }
