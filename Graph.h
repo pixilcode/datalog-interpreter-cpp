@@ -14,7 +14,9 @@ class Graph {
 private:
     map<Id, set<Id>> adjList;
 
-    pair<vector<Id>, map<Id, bool>> doStuff(Id curr, const map<Id, bool> &visited);
+    pair<vector<Id>, map<Id, bool>> postorderTraverse(Id curr, const map<Id, bool> &visited);
+
+    pair<set<Id>, map<Id, bool>> sccTraverse(Id curr, const map<Id, bool> &visited);
 
 public:
     explicit Graph(set<pair<Id, Id>> edges) : adjList(edges) {}
@@ -31,6 +33,8 @@ public:
     }
 
     [[nodiscard]] vector<Id> postorder(vector<Id> order) const;
+
+    [[nodiscard]] vector<set<Id>> scc(vector<Id> order) const;
 };
 
 
